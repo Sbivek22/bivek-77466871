@@ -1,0 +1,126 @@
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using BOOSE;
+
+namespace BOOSEInterpreter.Canvas
+{
+    public class PanelCanvas : ICanvas
+    {
+        private Bitmap bitmap;
+        private Graphics graphics;
+
+        public int Xpos { get; set; }
+        public int Ypos { get; set; }
+        public object PenColour { get; set; } = Color.Black;
+
+        private readonly PictureBox output;
+
+        public PanelCanvas(PictureBox box)
+        {
+            output = box;
+
+            // Automatically create graphics immediately!
+            if (box.Width > 0 && box.Height > 0)
+            {
+                Set(box.Width, box.Height);
+            }
+        }
+
+
+        public void Set(int width, int height)
+        {
+            bitmap = new Bitmap(width, height);
+            graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(Color.White);
+            output.Image = bitmap;
+        }
+
+        public void MoveTo(int x, int y)
+        {
+            Xpos = x;
+            Ypos = y;
+        }
+
+        public void DrawTo(int x, int y)
+        {
+            using Pen p = new Pen((Color)PenColour, 2);
+            graphics.DrawLine(p, Xpos, Ypos, x, y);
+
+            Xpos = x;
+            Ypos = y;
+
+            Refresh();
+        }
+
+        public void Circle(int radius, bool filled)
+        {
+            Rectangle rect = new Rectangle(Xpos - radius, Ypos - radius, radius * 2, radius * 2);
+
+            if (filled)
+                graphics.FillEllipse(new SolidBrush((Color)PenColour), rect);
+            else
+                graphics.DrawEllipse(new Pen((Color)PenColour, 2), rect);
+
+            Refresh();
+        }
+
+        public void Rect(int width, int height, bool filled)
+        {
+            Rectangle rect = new Rectangle(Xpos, Ypos, width, height);
+
+            if (filled)
+                graphics.FillRectangle(new SolidBrush((Color)PenColour), rect);
+            else
+                graphics.DrawRectangle(new Pen((Color)PenColour, 2), rect);
+
+            Refresh();
+        }
+
+        public void Tri(int width, int height)
+        {
+            Point p1 = new Point(Xpos, Ypos + height);
+            Point p2 = new Point(Xpos + width, Ypos + height);
+            Point p3 = new Point(Xpos + width / 2, Ypos);
+
+            graphics.DrawPolygon(new Pen((Color)PenColour, 2), new[] { p1, p2, p3 });
+
+            Refresh();
+        }
+
+        public void Clear()
+        {
+            graphics.Clear(Color.White);
+            Refresh();
+        }
+
+        public void Reset()
+        {
+            Xpos = 0;
+            Ypos = 0;
+            PenColour = Color.Black;
+        }
+
+        public void SetColour(int r, int g, int b)
+        {
+            PenColour = Color.FromArgb(r, g, b);
+        }
+
+        public void WriteText(string text)
+        {
+            using Font f = new Font("Arial", 14);
+            using Brush b = new SolidBrush((Color)PenColour);
+            graphics.DrawString(text, f, b, Xpos, Ypos);
+
+            Refresh();
+        }
+
+        public object getBitmap() => bitmap;
+
+        private void Refresh()
+        {
+            output.Image = bitmap;
+            output.Refresh();
+        }
+    }
+}

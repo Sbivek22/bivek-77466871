@@ -1,0 +1,20 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppDrawTo : CommandTwoParameters
+    {
+        private readonly PanelCanvas canvas;
+
+        public AppDrawTo(PanelCanvas c) => canvas = c;
+
+        public override void Execute()
+        {
+            int x = (int)(double)ParameterList[0];
+            int y = (int)(double)ParameterList[1];
+
+            canvas.DrawTo(x, y);
+        }
+    }
+}

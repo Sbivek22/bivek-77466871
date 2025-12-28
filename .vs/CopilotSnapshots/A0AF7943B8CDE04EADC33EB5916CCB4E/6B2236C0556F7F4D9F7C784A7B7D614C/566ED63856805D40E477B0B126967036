@@ -1,0 +1,21 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppPenColour : CommandThreeParameters
+    {
+        private readonly PanelCanvas canvas;
+
+        public AppPenColour(PanelCanvas c) => canvas = c;
+
+        public override void Execute()
+        {
+            int r = (int)(double)ParameterList[0];
+            int g = (int)(double)ParameterList[1];
+            int b = (int)(double)ParameterList[2];
+
+            canvas.SetColour(r, g, b);
+        }
+    }
+}

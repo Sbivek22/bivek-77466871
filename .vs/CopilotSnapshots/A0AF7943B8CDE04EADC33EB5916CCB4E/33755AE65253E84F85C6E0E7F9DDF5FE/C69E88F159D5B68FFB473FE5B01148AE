@@ -1,0 +1,19 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppMoveTo : CommandTwoParameters
+    {
+        private readonly PanelCanvas canvas;
+
+        public AppMoveTo(PanelCanvas c) => canvas = c;
+
+        public override void Execute()
+        {
+            int x = (int)(double)ParameterList[0];
+            int y = (int)(double)ParameterList[1];
+            canvas.MoveTo(x, y);
+        }
+    }
+}

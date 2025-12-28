@@ -1,0 +1,49 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppTriCommand : ICommand
+    {
+        private readonly PanelCanvas canvas;
+        private int w, h;
+
+        public AppTriCommand(PanelCanvas c)
+        {
+            canvas = c;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="program"></param>
+        /// <param name="paramList"></param>
+        public void Set(StoredProgram program, string paramList)
+        {
+            var p = paramList.Split(',');
+
+            w = int.Parse(p[0]);
+            h = int.Parse(p[1]);
+        }
+
+        public void Compile()
+        {
+            // no restrictions
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+
+        public void CheckParameters(string[] parameters)  
+        {
+            // unrestricted → do nothing
+        }
+
+        public void Execute()
+        {
+            canvas.Tri(w, h);
+        }
+    }
+   
+}

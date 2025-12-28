@@ -1,0 +1,36 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppCircle : ICommand
+    {
+        private readonly PanelCanvas canvas;
+        private int radius;
+
+        public AppCircle(PanelCanvas c)
+        {
+            canvas = c;
+        }
+
+        public void Set(StoredProgram program, string paramList)
+        {
+            radius = int.Parse(paramList);
+        }
+
+        public void Compile()
+        {
+            // no restrictions
+        }
+
+        public void CheckParameters(string[] parameters)
+        {
+            // unrestricted → do nothing
+        }
+
+        public void Execute()
+        {
+            canvas.Circle(radius, false);
+        }
+    }
+}

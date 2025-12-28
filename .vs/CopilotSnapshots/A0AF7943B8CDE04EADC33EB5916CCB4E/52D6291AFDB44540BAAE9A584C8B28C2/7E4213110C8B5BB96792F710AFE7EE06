@@ -1,0 +1,115 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using BOOSEInterpreter.Canvas;
+using BOOSEInterpreter.Core;
+using BOOSE;
+using System.Drawing;
+using System.Windows.Forms;
+using BOOSEInterpreter;
+
+namespace BOOSEInterpreterTests
+{
+    [TestClass]
+    public class CanvasTests
+    {
+        /// <summary>
+        /// Unit tests for the <see cref="PanelCanvas"/> drawing surface.
+        /// </summary>
+        /// <remarks>
+        /// Tests run against an off-screen <see cref="PictureBox"/> to avoid interacting with the UI.
+        /// </remarks>
+        private PictureBox CreatePictureBox()
+        {
+            return new PictureBox()
+            {
+                Width = 400,
+                Height = 400,
+                Image = new Bitmap(400, 400)
+            };
+        }
+
+        // ============================================================
+        // 1. MOVETO TEST
+        // ============================================================
+
+        /// <summary>
+        /// Verifies that <see cref="PanelCanvas.MoveTo(int,int)"/> updates the internal cursor coordinates.
+        /// </summary>
+        [TestMethod]
+        public void Test_MoveTo_UpdatesCursorCorrectly()
+        {
+            // Arrange
+            PictureBox box = CreatePictureBox();
+            PanelCanvas canvas = new PanelCanvas(box);
+
+            // Act
+            canvas.MoveTo(50, 60);
+
+            // Assert
+            Assert.AreEqual(50, canvas.Xpos, "Xpos should match the MoveTo X value.");
+            Assert.AreEqual(60, canvas.Ypos, "Ypos should match the MoveTo Y value.");
+        }
+
+        // ============================================================
+        // 2. DRAWTO TEST
+        // ============================================================
+
+        /// <summary>
+        /// Verifies that <see cref="PanelCanvas.DrawTo(int,int)"/> draws a line and updates the cursor
+        /// to the target coordinates.
+        /// </summary>
+        [TestMethod]
+        public void Test_DrawTo_UpdatesCursorCorrectly()
+        {
+            // Arrange
+            PictureBox box = CreatePictureBox();
+            PanelCanvas canvas = new PanelCanvas(box);
+
+            // Start at 0,0
+            canvas.MoveTo(0, 0);
+
+            // Act
+            canvas.DrawTo(120, 80);
+
+            // Assert
+            Assert.AreEqual(120, canvas.Xpos, "Xpos should update to DrawTo target X.");
+            Assert.AreEqual(80, canvas.Ypos, "Ypos should update to DrawTo target Y.");
+        }
+
+        // ============================================================
+        // 3. MULTILINE PROGRAM TEST
+        // ============================================================
+
+        /// <summary>
+        /// Executes a small multiline program through the interpreter and ensures the resulting
+        /// pen position and drawing operations are applied to the canvas as expected.
+        /// </summary>
+        [TestMethod]
+        public void Test_MultilineProgram_RunsCorrectly()
+        {
+            // Arrange
+            PictureBox box = CreatePictureBox();
+            PanelCanvas canvas = new PanelCanvas(box);
+            AppCommandFactory factory = new AppCommandFactory(canvas);
+            StoredProgram program = new StoredProgram(canvas);
+            Parser parser = new Parser(factory, program);
+
+            string code =
+                "moveto 10,10\n" +
+                "drawto 100,50\n" +
+                "circle 20\n";
+
+            // Act
+            parser.ParseProgram(code);
+            program.Run();
+
+            // Assert: Final position should be from drawto (100,50)
+            Assert.AreEqual(100, canvas.Xpos, "Final Xpos incorrect after multiline program execution.");
+            Assert.AreEqual(50, canvas.Ypos, "Final Ypos incorrect after multiline program execution.");
+        }
+    }
+}

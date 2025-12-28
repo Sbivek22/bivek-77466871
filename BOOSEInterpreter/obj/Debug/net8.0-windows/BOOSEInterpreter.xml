@@ -1,0 +1,575 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BOOSEInterpreter</name>
+    </assembly>
+    <members>
+        <member name="T:BOOSEInterpreter.Canvas.PanelCanvas">
+            <summary>
+            An implementation of <see cref="T:BOOSE.ICanvas"/> that draws onto a <see cref="T:System.Windows.Forms.PictureBox"/> control.
+            The class manages an internal <see cref="T:System.Drawing.Bitmap"/> and <see cref="T:System.Drawing.Graphics"/> object used
+            for rendering shapes, text and images.
+            </summary>
+            
+        </member>
+        <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.bitmap">
+            <summary>
+            Backing bitmap used as the drawing surface.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.graphics">
+            <summary>
+            Graphics object obtained from <see cref="F:BOOSEInterpreter.Canvas.PanelCanvas.bitmap"/> used to perform drawing operations.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.Xpos">
+            <summary>
+            Current X position for drawing operations.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.Ypos">
+            <summary>
+            Current Y position for drawing operations.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour">
+            <summary>
+            Current pen/brush colour used for drawing. Stored as <see cref="T:System.Object"/> to match the
+            interpreter's canvas interface but is expected to hold a <see cref="T:System.Drawing.Color"/> instance.
+            Defaults to <see cref="P:System.Drawing.Color.Black"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.output">
+            <summary>
+            The <see cref="T:System.Windows.Forms.PictureBox"/> control that displays the canvas bitmap to the user.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.#ctor(System.Windows.Forms.PictureBox)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> class using the provided
+            <see cref="T:System.Windows.Forms.PictureBox"/> as the display target. If the control already has a positive
+            size, the internal bitmap/graphics objects are created immediately.
+            </summary>
+            <param name="box">The picture box that will display the canvas.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)">
+            <summary>
+            Creates or replaces the internal bitmap and graphics objects with the specified size
+            and clears the surface to white.
+            </summary>
+            <param name="width">Width of the drawing surface in pixels.</param>
+            <param name="height">Height of the drawing surface in pixels.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)">
+            <summary>
+            Moves the current pen position to the specified coordinates without drawing.
+            </summary>
+            <param name="x">New X coordinate.</param>
+            <param name="y">New Y coordinate.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)">
+            <summary>
+            Draws a line from the current pen position to the specified coordinates and updates
+            the current position to the target point.
+            </summary>
+            <param name="x">Target X coordinate.</param>
+            <param name="y">Target Y coordinate.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)">
+            <summary>
+            Draws a circle centered at the current pen position.
+            </summary>
+            <param name="radius">Radius of the circle in pixels.</param>
+            <param name="filled">If <c>true</c>, the circle is filled; otherwise only the outline is drawn.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Draws a rectangle with the top-left corner at the current pen position.
+            </summary>
+            <param name="width">Width of the rectangle in pixels.</param>
+            <param name="height">Height of the rectangle in pixels.</param>
+            <param name="filled">If <c>true</c>, the rectangle is filled; otherwise only the outline is drawn.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)">
+            <summary>
+            Draws an isosceles triangle with the base starting at the current pen position.
+            The triangle's base spans <paramref name="width"/> pixels and its height is <paramref name="height"/> pixels.
+            </summary>
+            <param name="width">Width of the triangle base in pixels.</param>
+            <param name="height">Height of the triangle in pixels.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Clear">
+            <summary>
+            Clears the drawing surface to white and refreshes the display.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Reset">
+            <summary>
+            Resets the drawing state: pen position to (0,0) and colour to black.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sets the pen colour using RGB components.
+            </summary>
+            <param name="r">Red component (0-255).</param>
+            <param name="g">Green component (0-255).</param>
+            <param name="b">Blue component (0-255).</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)">
+            <summary>
+            Writes text at the current pen position using a default font.
+            </summary>
+            <param name="text">The text to draw.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.getBitmap">
+            <summary>
+            Returns the underlying bitmap used by the canvas. The return type is <see cref="T:System.Object"/>
+            to match the usage in the application UI code.
+            </summary>
+            <returns>The <see cref="T:System.Drawing.Bitmap"/> instance used as the drawing surface.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Refresh">
+            <summary>
+            Updates the picture box to display the current bitmap and forces a redraw of the control.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.AppCommandFactory">
+            <summary>
+            Factory that creates application-specific command implementations for the BOOSE interpreter.
+            Extends the base <see cref="T:BOOSE.CommandFactory"/> to return commands that operate on the
+            application's <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.AppCommandFactory.canvas">
+            <summary>
+            The canvas instance that created commands will use for rendering.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.AppCommandFactory.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.AppCommandFactory"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> that commands should draw to.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.AppCommandFactory.MakeCommand(System.String)">
+            <summary>
+            Creates an <see cref="T:BOOSE.ICommand"/> instance for the given command <paramref name="name"/>.
+            Returns application-specific command implementations where available; otherwise falls back
+            to the base factory behavior.
+            </summary>
+            <param name="name">The command name to create (case-insensitive).</param>
+            <returns>An <see cref="T:BOOSE.ICommand"/> instance for the requested command.</returns>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppCircle">
+            <summary>
+            Command that draws a circle on the application's canvas.
+            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppCircle.canvas">
+            <summary>
+            The canvas used to render the circle.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppCircle.radius">
+            <summary>
+            Radius of the circle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppCircle"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Configures the command with program context and the parameter list.
+            Expected <paramref name="paramList"/> is a single integer representing the radius.
+            </summary>
+            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
+            <param name="paramList">A string containing the parameter(s) for the command.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Compile">
+            <summary>
+            Performs compilation-time checks or transformations for the command.
+            This command imposes no compile-time restrictions.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.CheckParameters(System.String[])">
+            <summary>
+            Validates parameter array for this command. This implementation accepts any parameters
+            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
+            </summary>
+            <param name="parameters">Array of parameter strings to check.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Execute">
+            <summary>
+            Executes the command by drawing a circle with the configured radius on the canvas.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppDrawTo">
+            <summary>
+            Command that draws a line from the current pen position to the specified coordinates.
+            Inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppDrawTo.canvas">
+            <summary>
+            The canvas used to render the line.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppDrawTo"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.Execute">
+            <summary>
+            Executes the draw operation using the first two parameters from <see cref="!:ParameterList"/>.
+            Parameters are expected to be numeric; they are converted to integers and used as X and Y.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppMoveTo">
+            <summary>
+            Command that moves the current drawing position to the specified coordinates.
+            Inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppMoveTo.canvas">
+            <summary>
+            The canvas used to update the current pen position.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppMoveTo"/> command.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.Execute">
+            <summary>
+            Executes the move operation using the first two parameters from <see cref="!:ParameterList"/>.
+            Parameters are expected to be numeric; they are converted to integers and used as X and Y.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppPenColour">
+            <summary>
+            Command that sets the pen colour for subsequent drawing operations.
+            Inherits from <see cref="T:BOOSE.CommandThreeParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppPenColour.canvas">
+            <summary>
+            The canvas whose drawing colour will be changed.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.Execute">
+            <summary>
+            Executes the command by reading three numeric parameters (R, G, B) from
+            <see cref="!:ParameterList"/>, converting them to integers, and applying the
+            resulting colour to the canvas via <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppRect">
+            <summary>
+            Command that draws a rectangle on the application's canvas.
+            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppRect.canvas">
+            <summary>
+            The canvas used to render the rectangle.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppRect.width">
+            <summary>
+            Width of the rectangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppRect.height">
+            <summary>
+            Height of the rectangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppRect"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Configures the command with program context and the parameter list.
+            Expected <paramref name="paramList"/> contains two comma-separated integers: width and height.
+            </summary>
+            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
+            <param name="paramList">A comma-separated string with width and height.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.Compile">
+            <summary>
+            Performs compilation-time checks or transformations for the command.
+            This command imposes no compile-time restrictions.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.CheckParameters(System.String[])">
+            <summary>
+            Validates parameter array for this command. This implementation accepts any parameters
+            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
+            </summary>
+            <param name="parameters">Array of parameter strings to check.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.Execute">
+            <summary>
+            Executes the command by drawing a rectangle with the configured width and height on the canvas.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppTriCommand">
+            <summary>
+            Command that draws a triangle on the application's canvas.
+            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.canvas">
+            <summary>
+            The canvas used to render the triangle.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.w">
+            <summary>
+            Width of the triangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/>.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.h">
+            <summary>
+            Width of the triangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppTriCommand"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Configures the command with program context and the parameter list.
+            Expected <paramref name="paramList"/> contains two comma-separated integers: width and height.
+            </summary>
+            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
+            <param name="paramList">A comma-separated string with width and height.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Compile">
+            <summary>
+            Performs compilation-time checks or transformations for the command.
+            This command imposes no compile-time restrictions.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(System.String[])">
+            <summary>
+            Validates parameter array for this command. This implementation accepts any parameters
+            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
+            </summary>
+            <param name="parameters">Array of parameter strings to check.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Execute">
+            <summary>
+            Executes the command by drawing a triangle with the configured width and height on the canvas.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Command.AppWrite">
+            <summary>
+            Application-specific implementation of the <see cref="T:BOOSE.Write"/> command.
+            When executed, this command writes the evaluated expression text to the provided canvas.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Core.Command.AppWrite.canvas">
+            <summary>
+            The canvas used to render text for this command.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppWrite.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> class.
+            </summary>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used to draw the output text.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Command.AppWrite.Execute">
+            <summary>
+            Executes the write command. Calls the base implementation to evaluate the expression
+            and then writes the resulting text to the canvas.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Form1">
+            <summary>
+            Main form class for the BOOSE Interpreter application.
+            Handles UI interaction, parsing, execution, and canvas updates.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.parser">
+            <summary>
+            Parser instance used for interpreting BOOSE code.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.program">
+            <summary>
+            Stores the compiled BOOSE program for execution.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.canvas">
+            <summary>
+            Custom canvas used for drawing BOOSE graphics.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.factory">
+            <summary>
+            Factory that creates BOOSE commands, including custom commands.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.lastExecutedCode">
+            <summary>
+            Stores the previously executed code so it can be saved even after the input box is cleared.
+            </summary>
+        </member>
+        <member name="F:BOOSEInterpreter.Form1.fullCode">
+            <summary>
+            Stores ALL executed commands (history) used when saving code.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Form1"/> class.
+            Sets up all required BOOSE components and UI bindings.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.Log(System.String)">
+            <summary>
+            Appends a message to the debug console area.
+            </summary>
+            <param name="message">Message to output.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.runButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            Executes the multiline BOOSE code written in the input box.
+            Clears the text box after successful execution but preserves the code for saving.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.textBox1_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            Unused text-changed event for the single-line input box.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.RunSingleLine(System.String)">
+            <summary>
+            Parses and executes a single BOOSE command entered by the user.
+            </summary>
+            <param name="line">The command to execute.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.textBox1_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            Detects when the user presses Enter in the single-line input box
+            and immediately executes the command.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.newToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Clears all input, output, canvas, and debug logs.
+            Resets workspace to blank.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.codeToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Loads BOOSE code from a .boose file into the multiline input box.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.imageToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Loads an external image and displays it on the drawing canvas.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.codeToolStripMenuItem1_Click(System.Object,System.EventArgs)">
+            <summary>
+            Saves the last executed BOOSE code to a .boose file.
+            Works even if the input box is empty.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.imageToolStripMenuItem1_Click(System.Object,System.EventArgs)">
+            <summary>
+            Saves the current drawing canvas image as a PNG file.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.clearToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Clears the drawing canvas and the debug output.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.exitToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Safely closes the application.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.aboutToolStripMenuItem_Click(System.Object,System.EventArgs)">
+            <summary>
+            Shows basic information about the BOOSE Interpreter application.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.lblInput_Click(System.Object,System.EventArgs)">
+            <summary>
+            Click handler for the input label. Intentionally empty (no action required).
+            </summary>
+            <param name="sender">The control that raised the event.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Form1.lblOutput_Click(System.Object,System.EventArgs)">
+            <summary>
+            Click handler for the output label. Intentionally empty (no action required).
+            </summary>
+            <param name="sender">The control that raised the event.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Program.Main">
+            <summary>
+             The main entry point for the application.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.ApplicationConfiguration">
+            <summary>
+             Bootstrap the application configuration.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.ApplicationConfiguration.Initialize">
+            <summary>
+             Bootstrap the application as follows:
+             <code>
+             global::System.Windows.Forms.Application.EnableVisualStyles();
+             global::System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+             global::System.Windows.Forms.Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            </code>
+            </summary>
+        </member>
+    </members>
+</doc>

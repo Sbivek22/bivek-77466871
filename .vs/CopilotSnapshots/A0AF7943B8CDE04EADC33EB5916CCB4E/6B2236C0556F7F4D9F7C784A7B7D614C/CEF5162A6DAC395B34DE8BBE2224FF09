@@ -1,0 +1,39 @@
+﻿using BOOSE;
+using BOOSEInterpreter.Canvas;
+
+namespace BOOSEInterpreter.Core.Command
+{
+    public class AppRect : ICommand
+    {
+        private readonly PanelCanvas canvas;
+        private int width;
+        private int height;
+
+        public AppRect(PanelCanvas c)
+        {
+            canvas = c;
+        }
+
+        public void Set(StoredProgram program, string paramList)
+        {
+            var parts = paramList.Split(',');
+            width = int.Parse(parts[0]);
+            height = int.Parse(parts[1]);
+        }
+
+        public void Compile()
+        {
+            // no restrictions
+        }
+
+        public void CheckParameters(string[] parameters)
+        {
+            // unrestricted → do nothing
+        }
+
+        public void Execute()
+        {
+            canvas.Rect(width, height, false);
+        }
+    }
+}
