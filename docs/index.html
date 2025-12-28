@@ -3,38 +3,464 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>BOOSEInterpreter XML Docs</title>
+  <link rel="icon" type="image/x-icon" href="idea.ico">
+  <title>BOOSEInterpreter Docs</title>
+
   <style>
-    body { font-family: Arial, sans-serif; margin: 24px; line-height: 1.4; }
-    header { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-    input { padding: 10px; font-size: 14px; min-width: 320px; width: min(720px, 100%); }
-    .hint { color: #444; margin: 10px 0 18px; }
-    .item { border: 1px solid #ddd; border-radius: 10px; padding: 12px; margin: 12px 0; }
-    .name { font-weight: 700; font-family: Consolas, monospace; }
-    .summary { margin-top: 8px; }
-    .meta { margin-top: 10px; font-size: 13px; color: #222; }
-    .meta-title { font-weight: 700; margin-bottom: 4px; }
-    code { background: #f6f6f6; padding: 2px 6px; border-radius: 6px; }
-    .error { color: #b00020; font-weight: 700; }
-    .muted { color: #666; }
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.66);
+      --border: rgba(255,255,255,.12);
+      --accent: #7aa2ff;
+      --accent2: #7affc4;
+      --danger: #ff6b6b;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1000px 600px at 10% 10%, rgba(122,162,255,.22), transparent 55%),
+        radial-gradient(900px 500px at 90% 30%, rgba(122,255,196,.16), transparent 60%),
+        radial-gradient(700px 500px at 50% 90%, rgba(255,122,180,.10), transparent 60%),
+        var(--bg);
+      min-height: 100vh;
+    }
+
+    .app{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      min-height:100vh;
+    }
+
+    /* Sidebar */
+    .sidebar{
+      position: sticky;
+      top:0;
+      height: 100vh;
+      border-right: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter: blur(10px);
+      padding: 18px;
+      overflow:auto;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .logo{
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+    }
+    .brand h1{
+      font-size: 16px;
+      line-height: 1.2;
+      margin:0;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .brand .sub{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .search{
+      display:flex;
+      gap:10px;
+      margin: 14px 0 12px;
+    }
+    input{
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline: none;
+    }
+    input::placeholder{ color: rgba(255,255,255,.45); }
+
+    .pillrow{
+      display:flex;
+      gap:8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .pill{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      user-select:none;
+    }
+
+    .list{
+      margin-top: 8px;
+    }
+    .listHeader{
+      display:flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 10px 0 8px;
+    }
+    .listHeader .title{
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: 13px;
+    }
+    .listHeader .count{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .classItem{
+      width:100%;
+      text-align:left;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text);
+      padding: 10px 10px;
+      border-radius: 12px;
+      display:flex;
+      gap:10px;
+      cursor:pointer;
+    }
+    .classItem:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.08);
+    }
+    .classItem.active{
+      background: rgba(122,162,255,.16);
+      border-color: rgba(122,162,255,.30);
+    }
+    .classDot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 4px;
+      background: rgba(255,255,255,.35);
+    }
+    .classItem.active .classDot{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+    }
+    .classMeta{
+      min-width:0;
+    }
+    .className{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .classNs{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Main */
+    .main{
+      padding: 22px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .crumbs{
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .crumbs code{
+      font-family: var(--mono);
+      background: rgba(0,0,0,.22);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: var(--text);
+    }
+
+    .panel{
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .hero{
+      padding: 18px 18px;
+      background: linear-gradient(135deg, rgba(122,162,255,.15), rgba(122,255,196,.10));
+      border-bottom: 1px solid var(--border);
+    }
+    .heroTitle{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      margin:0;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+    .heroTitle code{
+      font-family: var(--mono);
+      font-size: 14px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+    }
+    .heroSummary{
+      margin-top: 8px;
+      color: rgba(255,255,255,.78);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+
+    .content{
+      padding: 14px 18px 18px;
+    }
+
+    .sectionRow{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 8px 0 12px;
+    }
+    .sectionRow h2{
+      margin:0;
+      font-size: 13px;
+      letter-spacing: .25px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.80);
+    }
+
+    .tabs{
+      display:flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tab{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .tab.active{
+      color: var(--text);
+      border-color: rgba(122,162,255,.35);
+      background: rgba(122,162,255,.16);
+    }
+
+    .memberGrid{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    details.member{
+      border: 1px solid rgba(255,255,255,.10);
+      background: var(--panel2);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    details.member summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    details.member summary::-webkit-details-marker{ display:none; }
+    .mLeft{
+      min-width:0;
+    }
+    .mSig{
+      font-family: var(--mono);
+      font-size: 12.5px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .mOneLine{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+    }
+    .chev{
+      color: rgba(255,255,255,.60);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+    details.member[open] .chev{
+      color: var(--text);
+    }
+
+    .mBody{
+      padding: 0 12px 12px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .kv{
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .kTitle{
+      font-size: 12px;
+      font-weight: 800;
+      color: rgba(255,255,255,.82);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .22px;
+    }
+    .kText{
+      font-size: 13px;
+      color: rgba(255,255,255,.86);
+      line-height: 1.45;
+    }
+    .paramLine{
+      font-family: var(--mono);
+      font-size: 12.2px;
+      margin: 4px 0;
+      color: rgba(255,255,255,.86);
+    }
+    .paramLine span{
+      color: var(--muted);
+      font-family: var(--sans);
+      margin-left: 8px;
+    }
+
+    .empty{
+      padding: 14px;
+      color: var(--muted);
+      border: 1px dashed rgba(255,255,255,.18);
+      border-radius: 14px;
+      background: rgba(0,0,0,.10);
+    }
+
+    .errorBox{
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,107,107,.35);
+      background: rgba(255,107,107,.10);
+      color: rgba(255,255,255,.92);
+    }
+    .errorBox .t{
+      font-weight: 900;
+      color: var(--danger);
+      margin-bottom: 8px;
+    }
+    .mono{ font-family: var(--mono); }
+
+    @media (max-width: 980px){
+      .app{ grid-template-columns: 1fr; }
+      .sidebar{
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>BOOSEInterpreter Documentation</h1>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <h1>BOOSEInterpreter Docs</h1>
+          <div class="sub">From C# XML comments (api.xml)</div>
+        </div>
+      </div>
 
-  <header>
-    <input id="q" placeholder="Search: e.g. T:BOOSEInterpreter, M:Class.Method, MoveTo, DrawTo" />
-  </header>
+      <div class="search">
+        <input id="classSearch" placeholder="Search classes…" />
+      </div>
 
-  <div class="hint">
-    This page reads <code>api.xml</code> generated from your C# <code>///</code> XML comments.
-    <span class="muted">If you see an error, confirm <code>docs/api.xml</code> exists.</span>
+      <div class="pillrow">
+        <div class="pill">Click a class to view docs</div>
+        <div class="pill">Uses docs/api.xml</div>
+      </div>
+
+      <div class="list">
+        <div class="listHeader">
+          <div class="title">Classes</div>
+          <div id="classCount" class="count">0</div>
+        </div>
+        <div id="classList"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="crumbs" id="crumbs">Select a class from the left.</div>
+        <div style="min-width: 280px; width: min(520px, 100%);">
+          <input id="memberSearch" placeholder="Search in selected class…" disabled />
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="hero">
+          <h2 class="heroTitle" id="heroTitle">Documentation</h2>
+          <div class="heroSummary" id="heroSummary">
+            This site renders your C# <span class="mono">///</span> XML comments. Copy your generated XML doc file to <span class="mono">docs/api.xml</span>.
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="sectionRow">
+            <h2>Members</h2>
+            <div class="tabs" id="tabs"></div>
+          </div>
+
+          <div id="memberArea"></div>
+        </div>
+      </div>
+    </main>
   </div>
 
-  <div id="status" class="muted"></div>
-  <div id="out"></div>
-
   <script>
+    // ---------- Utilities ----------
     function escapeHtml(s) {
       return (s || "").replace(/[&<>"']/g, c => ({
         "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
@@ -45,17 +471,44 @@
       return (s || "").trim().replace(/\s+/g, " ");
     }
 
-    async function loadXml() {
-      const res = await fetch("./api.xml", { cache: "no-store" });
-      if (!res.ok) throw new Error("Cannot load api.xml. Put docs/api.xml next to index.html.");
-      const text = await res.text();
-      const doc = new DOMParser().parseFromString(text, "text/xml");
+    function splitNamespace(fullTypeName){
+      const lastDot = fullTypeName.lastIndexOf(".");
+      if (lastDot === -1) return { ns: "", short: fullTypeName };
+      return { ns: fullTypeName.slice(0, lastDot), short: fullTypeName.slice(lastDot + 1) };
+    }
 
-      // If XML is invalid, browser returns a <parsererror> node.
-      const parserError = doc.getElementsByTagName("parsererror")[0];
-      if (parserError) throw new Error("api.xml could not be parsed (invalid XML).");
+    // member @name formats:
+    // T:Namespace.Class
+    // M:Namespace.Class.Method(System.Int32)
+    // P:Namespace.Class.Prop
+    // F:Namespace.Class.Field
+    // E:Namespace.Class.Event
+    function parseMemberName(raw){
+      const idx = raw.indexOf(":");
+      const kind = idx >= 0 ? raw.slice(0, idx) : "";
+      const rest = idx >= 0 ? raw.slice(idx + 1) : raw;
 
-      return doc;
+      // remove params for grouping signature display
+      const noParams = rest.split("(")[0];
+
+      // detect class owner (for methods/properties/fields/events)
+      // For M:Namespace.Class.Method -> owner = Namespace.Class
+      // For T:Namespace.Class -> owner = Namespace.Class
+      let owner = "";
+      let leaf = noParams;
+      if (kind === "T") {
+        owner = noParams;
+        leaf = noParams;
+      } else {
+        const lastDot = noParams.lastIndexOf(".");
+        owner = lastDot >= 0 ? noParams.slice(0, lastDot) : "";
+        leaf = lastDot >= 0 ? noParams.slice(lastDot + 1) : noParams;
+      }
+
+      // nicer display for constructors
+      const displayLeaf = (leaf === "#ctor" || leaf === ".ctor") ? "Constructor" : leaf;
+
+      return { kind, full: rest, noParams, owner, leaf: displayLeaf };
     }
 
     function getFirstText(memberNode, tagName) {
@@ -65,94 +518,309 @@
 
     function readMembers(xmlDoc) {
       const memberNodes = Array.from(xmlDoc.getElementsByTagName("member"));
-      return memberNodes.map(m => {
-        const name = m.getAttribute("name") || "";
-        const summary = getFirstText(m, "summary");
-        const returns = getFirstText(m, "returns");
-        const remarks = getFirstText(m, "remarks");
+      return memberNodes.map(n => {
+        const rawName = n.getAttribute("name") || "";
+        const parsed = parseMemberName(rawName);
 
-        const params = Array.from(m.getElementsByTagName("param")).map(p => ({
+        const summary = getFirstText(n, "summary");
+        const returns = getFirstText(n, "returns");
+        const remarks = getFirstText(n, "remarks");
+
+        const params = Array.from(n.getElementsByTagName("param")).map(p => ({
           name: p.getAttribute("name") || "",
           text: normalize(p.textContent)
         }));
 
-        return { name, summary, returns, remarks, params };
-      }).filter(x => x.name); // keep only members with name
+        return {
+          rawName,
+          kind: parsed.kind,
+          owner: parsed.owner,
+          noParams: parsed.noParams,
+          leaf: parsed.leaf,
+          full: parsed.full,
+          summary,
+          returns,
+          remarks,
+          params
+        };
+      }).filter(m => m.rawName);
     }
 
-    function render(members, query) {
-      const out = document.getElementById("out");
-      out.innerHTML = "";
+    async function loadXml() {
+      const res = await fetch("./api.xml", { cache: "no-store" });
+      if (!res.ok) throw new Error("Cannot load api.xml. Ensure docs/api.xml exists next to index.html.");
+      const text = await res.text();
+      const doc = new DOMParser().parseFromString(text, "text/xml");
+      if (doc.getElementsByTagName("parsererror")[0]) throw new Error("api.xml could not be parsed (invalid XML).");
+      return doc;
+    }
 
-      const q = (query || "").toLowerCase();
+    // ---------- Build model ----------
+    function buildModel(members){
+      // types from T: entries
+      const types = new Map(); // fullType -> { summary, remarks }
+      for (const m of members){
+        if (m.kind === "T"){
+          types.set(m.owner, { summary: m.summary, remarks: m.remarks });
+        }
+      }
+
+      // class map: fullType -> { info, groups }
+      const classes = new Map();
+      function ensureClass(typeName){
+        if (!classes.has(typeName)){
+          const info = types.get(typeName) || { summary: "", remarks: "" };
+          classes.set(typeName, {
+            typeName,
+            info,
+            groups: {
+              Methods: [],
+              Properties: [],
+              Fields: [],
+              Events: [],
+              Others: []
+            }
+          });
+        }
+        return classes.get(typeName);
+      }
+
+      for (const m of members){
+        const typeName = m.kind === "T" ? m.owner : m.owner;
+        if (!typeName) continue;
+
+        const c = ensureClass(typeName);
+
+        if (m.kind === "M") c.groups.Methods.push(m);
+        else if (m.kind === "P") c.groups.Properties.push(m);
+        else if (m.kind === "F") c.groups.Fields.push(m);
+        else if (m.kind === "E") c.groups.Events.push(m);
+        else if (m.kind === "T") { /* already captured */ }
+        else c.groups.Others.push(m);
+      }
+
+      // sort classes and members
+      const classList = Array.from(classes.values()).sort((a,b) => a.typeName.localeCompare(b.typeName));
+      for (const c of classList){
+        for (const k of Object.keys(c.groups)){
+          c.groups[k].sort((a,b) => a.noParams.localeCompare(b.noParams));
+        }
+      }
+      return classList;
+    }
+
+    // ---------- UI state ----------
+    let ALL_CLASSES = [];
+    let SELECTED = null;
+    let ACTIVE_TAB = "Methods";
+    let MEMBER_QUERY = "";
+
+    const elClassList = document.getElementById("classList");
+    const elClassCount = document.getElementById("classCount");
+    const elClassSearch = document.getElementById("classSearch");
+
+    const elCrumbs = document.getElementById("crumbs");
+    const elHeroTitle = document.getElementById("heroTitle");
+    const elHeroSummary = document.getElementById("heroSummary");
+
+    const elTabs = document.getElementById("tabs");
+    const elMemberArea = document.getElementById("memberArea");
+    const elMemberSearch = document.getElementById("memberSearch");
+
+    function setSelected(typeName){
+      SELECTED = ALL_CLASSES.find(c => c.typeName === typeName) || null;
+      ACTIVE_TAB = "Methods";
+      MEMBER_QUERY = "";
+      elMemberSearch.value = "";
+      elMemberSearch.disabled = !SELECTED;
+      render();
+    }
+
+    function renderSidebar(){
+      const q = (elClassSearch.value || "").toLowerCase().trim();
       const filtered = q
-        ? members.filter(m =>
-            m.name.toLowerCase().includes(q) ||
-            (m.summary || "").toLowerCase().includes(q) ||
-            (m.remarks || "").toLowerCase().includes(q)
-          )
-        : members;
+        ? ALL_CLASSES.filter(c => c.typeName.toLowerCase().includes(q))
+        : ALL_CLASSES;
 
-      document.getElementById("status").textContent =
-        `Showing ${filtered.length} of ${members.length} members`;
+      elClassCount.textContent = String(filtered.length);
+      elClassList.innerHTML = "";
 
-      if (filtered.length === 0) {
-        out.innerHTML = "<p>No matches.</p>";
+      for (const c of filtered){
+        const { ns, short } = splitNamespace(c.typeName);
+        const btn = document.createElement("button");
+        btn.className = "classItem" + (SELECTED && SELECTED.typeName === c.typeName ? " active" : "");
+        btn.innerHTML = `
+          <div class="classDot"></div>
+          <div class="classMeta">
+            <div class="className">${escapeHtml(short)}</div>
+            <div class="classNs">${escapeHtml(ns || "(global)")}</div>
+          </div>
+        `;
+        btn.addEventListener("click", () => setSelected(c.typeName));
+        elClassList.appendChild(btn);
+      }
+    }
+
+    function renderTabs(){
+      elTabs.innerHTML = "";
+      if (!SELECTED) return;
+
+      const keys = ["Methods","Properties","Fields","Events","Others"];
+      for (const k of keys){
+        const count = SELECTED.groups[k].length;
+        if (count === 0 && k !== "Methods") continue; // keep UI clean; always allow Methods tab
+        const t = document.createElement("div");
+        t.className = "tab" + (ACTIVE_TAB === k ? " active" : "");
+        t.textContent = `${k} (${count})`;
+        t.addEventListener("click", () => { ACTIVE_TAB = k; renderMembers(); renderTabs(); });
+        elTabs.appendChild(t);
+      }
+    }
+
+    function memberMatches(m){
+      if (!MEMBER_QUERY) return true;
+      const q = MEMBER_QUERY.toLowerCase();
+      return (m.noParams || "").toLowerCase().includes(q)
+        || (m.summary || "").toLowerCase().includes(q)
+        || (m.remarks || "").toLowerCase().includes(q)
+        || (m.full || "").toLowerCase().includes(q);
+    }
+
+    function renderMembers(){
+      elMemberArea.innerHTML = "";
+
+      if (!SELECTED){
+        elMemberArea.innerHTML = `<div class="empty">Select a class from the left to view its documentation.</div>`;
         return;
       }
 
-      for (const m of filtered) {
-        const paramsHtml = m.params.length
-          ? `
-            <div class="meta">
-              <div class="meta-title">Parameters</div>
-              ${m.params.map(p =>
-                `<div><code>${escapeHtml(p.name)}</code> - ${escapeHtml(p.text)}</div>`
-              ).join("")}
-            </div>
-          `
-          : "";
+      const list = (SELECTED.groups[ACTIVE_TAB] || []).filter(memberMatches);
 
-        const returnsHtml = m.returns
-          ? `<div class="meta"><span class="meta-title">Returns</span> - ${escapeHtml(m.returns)}</div>`
-          : "";
-
-        const remarksHtml = m.remarks
-          ? `<div class="meta"><span class="meta-title">Remarks</span> - ${escapeHtml(m.remarks)}</div>`
-          : "";
-
-        const div = document.createElement("div");
-        div.className = "item";
-        div.innerHTML = `
-          <div class="name">${escapeHtml(m.name)}</div>
-          <div class="summary">${escapeHtml(m.summary || "(no summary)")}</div>
-          ${paramsHtml}
-          ${returnsHtml}
-          ${remarksHtml}
-        `;
-        out.appendChild(div);
+      if (list.length === 0){
+        elMemberArea.innerHTML = `<div class="empty">No members found for this tab/search.</div>`;
+        return;
       }
+
+      const wrap = document.createElement("div");
+      wrap.className = "memberGrid";
+
+      for (const m of list){
+        const oneLine = m.summary || m.remarks || "(no summary)";
+        const sig = m.noParams; // clean signature (no params)
+
+        const paramsBlock = (m.params && m.params.length)
+          ? `
+            <div class="kv">
+              <div class="kTitle">Parameters</div>
+              ${m.params.map(p => `
+                <div class="paramLine">${escapeHtml(p.name)}<span>${escapeHtml(p.text || "")}</span></div>
+              `).join("")}
+            </div>
+          ` : "";
+
+        const returnsBlock = m.returns
+          ? `
+            <div class="kv">
+              <div class="kTitle">Returns</div>
+              <div class="kText">${escapeHtml(m.returns)}</div>
+            </div>
+          ` : "";
+
+        const remarksBlock = m.remarks
+          ? `
+            <div class="kv">
+              <div class="kTitle">Remarks</div>
+              <div class="kText">${escapeHtml(m.remarks)}</div>
+            </div>
+          ` : "";
+
+        const summaryBlock = `
+          <div class="kv">
+            <div class="kTitle">Summary</div>
+            <div class="kText">${escapeHtml(m.summary || "(no summary)")}</div>
+          </div>
+        `;
+
+        const details = document.createElement("details");
+        details.className = "member";
+        details.innerHTML = `
+          <summary>
+            <div class="mLeft">
+              <div class="mSig">${escapeHtml(sig)}</div>
+              <div class="mOneLine">${escapeHtml(oneLine)}</div>
+            </div>
+            <div class="chev">▾</div>
+          </summary>
+          <div class="mBody">
+            ${summaryBlock}
+            ${paramsBlock}
+            ${returnsBlock}
+            ${remarksBlock}
+          </div>
+        `;
+        wrap.appendChild(details);
+      }
+
+      elMemberArea.appendChild(wrap);
     }
 
-    (async () => {
-      const q = document.getElementById("q");
-      const out = document.getElementById("out");
+    function renderHeader(){
+      if (!SELECTED){
+        elCrumbs.innerHTML = `Select a class from the left.`;
+        elHeroTitle.textContent = "Documentation";
+        elHeroSummary.innerHTML = `This site renders your C# <span class="mono">///</span> XML comments. Copy your generated XML doc file to <span class="mono">docs/api.xml</span>.`;
+        return;
+      }
 
-      try {
+      const { ns, short } = splitNamespace(SELECTED.typeName);
+      elCrumbs.innerHTML = `Namespace <code>${escapeHtml(ns || "(global)")}</code>  •  Class <code>${escapeHtml(short)}</code>`;
+
+      elHeroTitle.innerHTML = `Class <code>${escapeHtml(short)}</code>`;
+      const typeSummary = SELECTED.info.summary || SELECTED.info.remarks || "(no summary for this class)";
+      elHeroSummary.textContent = typeSummary;
+    }
+
+    function render(){
+      renderSidebar();
+      renderHeader();
+      renderTabs();
+      renderMembers();
+    }
+
+    // ---------- Init ----------
+    (async () => {
+      try{
         const xml = await loadXml();
         const members = readMembers(xml);
-        render(members, "");
+        ALL_CLASSES = buildModel(members);
+        elClassCount.textContent = String(ALL_CLASSES.length);
 
-        q.addEventListener("input", () => render(members, q.value));
-      } catch (err) {
-        document.getElementById("status").textContent = "";
-        out.innerHTML = `<p class="error">Error: ${escapeHtml(err.message)}</p>
-          <p>Fix checklist:</p>
-          <ol>
-            <li>Build your project so BOOSEInterpreter.xml exists.</li>
-            <li>Copy it to <code>docs/api.xml</code>.</li>
-            <li>Open using a local server or GitHub Pages (not just file double-click).</li>
-          </ol>`;
+        // auto-select first class if available
+        if (ALL_CLASSES.length > 0) setSelected(ALL_CLASSES[0].typeName);
+        else render();
+
+        elClassSearch.addEventListener("input", renderSidebar);
+
+        elMemberSearch.addEventListener("input", () => {
+          MEMBER_QUERY = (elMemberSearch.value || "").trim();
+          renderMembers();
+        });
+
+      } catch (err){
+        document.querySelector(".main").innerHTML = `
+          <div class="errorBox">
+            <div class="t">Error loading documentation</div>
+            <div>${escapeHtml(err.message)}</div>
+            <div style="margin-top:10px; color: rgba(255,255,255,.80);">
+              Checklist:
+              <ol>
+                <li>Build your project so <span class="mono">BOOSEInterpreter.xml</span> exists.</li>
+                <li>Copy it to <span class="mono">docs/api.xml</span>.</li>
+                <li>Open via GitHub Pages or a local server (not file double-click).</li>
+              </ol>
+            </div>
+          </div>
+        `;
       }
     })();
   </script>
