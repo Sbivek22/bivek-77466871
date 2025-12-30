@@ -24,6 +24,7 @@
     }
 
     * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body{
       margin:0;
       font-family: var(--sans);
@@ -33,32 +34,54 @@
         radial-gradient(900px 500px at 90% 30%, rgba(122,255,196,.16), transparent 60%),
         radial-gradient(700px 500px at 50% 90%, rgba(255,122,180,.10), transparent 60%),
         var(--bg);
-      min-height: 100vh;
+      overflow: hidden; /* prevent double scroll; we scroll panes */
     }
 
+    /* Layout */
     .app{
-      display:grid;
-      grid-template-columns: 320px 1fr;
-      min-height:100vh;
+      height: 100%;
+      display: grid;
+      grid-template-columns: var(--side, 360px) 8px 1fr;
+      min-height: 100%;
     }
 
     /* Sidebar */
     .sidebar{
-      position: sticky;
-      top:0;
-      height: 100vh;
+      height: 100%;
       border-right: 1px solid var(--border);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
       backdrop-filter: blur(10px);
-      padding: 18px;
-      overflow:auto;
+      padding: 16px;
+      overflow: auto;
     }
 
+    .resizer{
+      width: 8px;
+      cursor: col-resize;
+      background: rgba(255,255,255,.03);
+      border-right: 1px solid rgba(255,255,255,.06);
+    }
+    .resizer:hover{ background: rgba(122,162,255,.12); }
+
+    .main{
+      height: 100%;
+      overflow: auto;
+      padding: 18px 18px 24px;
+    }
+
+    /* Brand / top */
     .brand{
       display:flex;
       align-items:center;
+      justify-content: space-between;
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
+    }
+    .brandLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
     }
     .logo{
       width: 36px;
@@ -66,26 +89,48 @@
       border-radius: 12px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       box-shadow: var(--shadow);
+      flex: 0 0 auto;
     }
-    .brand h1{
-      font-size: 16px;
+    .brandText{
+      min-width: 0;
+    }
+    .brandText h1{
+      font-size: 15px;
       line-height: 1.2;
       margin:0;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: .2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .brand .sub{
+    .brandText .sub{
       font-size: 12px;
       color: var(--muted);
       margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .search{
+    .iconBtn{
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+      user-select:none;
+    }
+    .iconBtn:hover{ background: rgba(255,255,255,.06); }
+
+    /* Inputs */
+    .searchRow{
       display:flex;
       gap:10px;
-      margin: 14px 0 12px;
+      margin: 10px 0 10px;
     }
-    input{
+    input, select{
       width: 100%;
       padding: 10px 12px;
       border-radius: 12px;
@@ -93,6 +138,7 @@
       background: rgba(0,0,0,.18);
       color: var(--text);
       outline: none;
+      min-width: 0;
     }
     input::placeholder{ color: rgba(255,255,255,.45); }
 
@@ -100,7 +146,7 @@
       display:flex;
       gap:8px;
       flex-wrap: wrap;
-      margin-bottom: 14px;
+      margin: 10px 0 12px;
     }
     .pill{
       font-size: 12px;
@@ -112,25 +158,63 @@
       user-select:none;
     }
 
-    .list{
-      margin-top: 8px;
+    /* Sidebar sections */
+    .sideSection{
+      margin-top: 10px;
     }
-    .listHeader{
+    .sideHeader{
       display:flex;
       justify-content: space-between;
       align-items: baseline;
       margin: 10px 0 8px;
     }
-    .listHeader .title{
-      font-weight: 800;
+    .sideHeader .title{
+      font-weight: 900;
       letter-spacing: .2px;
-      font-size: 13px;
+      font-size: 12.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.82);
     }
-    .listHeader .count{
+    .sideHeader .count{
       font-size: 12px;
       color: var(--muted);
     }
 
+    .nsItem{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.12);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .nsItem summary{
+      list-style:none;
+      cursor:pointer;
+      padding: 10px 10px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .nsItem summary::-webkit-details-marker{ display:none; }
+    .nsTitle{
+      font-weight: 900;
+      font-size: 12.5px;
+      color: rgba(255,255,255,.90);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nsMeta{
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .classList{
+      padding: 6px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
     .classItem{
       width:100%;
       text-align:left;
@@ -157,6 +241,7 @@
       border-radius: 999px;
       margin-top: 4px;
       background: rgba(255,255,255,.35);
+      flex: 0 0 auto;
     }
     .classItem.active .classDot{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -181,21 +266,26 @@
     }
 
     /* Main */
-    .main{
-      padding: 22px;
+    .stickyTop{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 10px 0 14px;
+      background: linear-gradient(180deg, rgba(11,16,32,.98), rgba(11,16,32,.78), rgba(11,16,32,0));
+      backdrop-filter: blur(10px);
     }
 
     .topbar{
       display:flex;
       justify-content: space-between;
       align-items:center;
-      gap: 14px;
-      margin-bottom: 16px;
+      gap: 12px;
     }
-
     .crumbs{
       color: var(--muted);
       font-size: 12px;
+      line-height: 1.4;
+      min-width: 0;
     }
     .crumbs code{
       font-family: var(--mono);
@@ -204,6 +294,7 @@
       padding: 2px 6px;
       border-radius: 8px;
       color: var(--text);
+      white-space: nowrap;
     }
 
     .panel{
@@ -211,11 +302,11 @@
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      overflow:hidden;
+      overflow: hidden;
     }
 
     .hero{
-      padding: 18px 18px;
+      padding: 16px 18px;
       background: linear-gradient(135deg, rgba(122,162,255,.15), rgba(122,255,196,.10));
       border-bottom: 1px solid var(--border);
     }
@@ -227,6 +318,7 @@
       font-size: 18px;
       font-weight: 900;
       letter-spacing: .2px;
+      min-width: 0;
     }
     .heroTitle code{
       font-family: var(--mono);
@@ -235,16 +327,17 @@
       border-radius: 10px;
       border: 1px solid var(--border);
       background: rgba(0,0,0,.18);
+      white-space: nowrap;
     }
     .heroSummary{
       margin-top: 8px;
       color: rgba(255,255,255,.78);
       font-size: 13.5px;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     .content{
-      padding: 14px 18px 18px;
+      padding: 12px 16px 18px;
     }
 
     .sectionRow{
@@ -252,11 +345,12 @@
       align-items:center;
       justify-content: space-between;
       gap: 12px;
-      margin: 8px 0 12px;
+      margin: 6px 0 12px;
+      flex-wrap: wrap;
     }
     .sectionRow h2{
       margin:0;
-      font-size: 13px;
+      font-size: 12.5px;
       letter-spacing: .25px;
       text-transform: uppercase;
       color: rgba(255,255,255,.80);
@@ -266,6 +360,7 @@
       display:flex;
       gap: 8px;
       flex-wrap: wrap;
+      align-items:center;
     }
     .tab{
       padding: 7px 10px;
@@ -283,12 +378,33 @@
       background: rgba(122,162,255,.16);
     }
 
+    .toggle{
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .toggle.on{
+      color: var(--text);
+      border-color: rgba(122,255,196,.32);
+      background: rgba(122,255,196,.12);
+    }
+
     .memberGrid{
       display:flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 10px;
     }
+
+    /* density modes */
+    .compact details.member summary{ padding: 9px 10px; }
+    .compact .mOneLine{ margin-top: 3px; }
+
     details.member{
       border: 1px solid rgba(255,255,255,.10);
       background: var(--panel2);
@@ -305,9 +421,7 @@
       gap: 12px;
     }
     details.member summary::-webkit-details-marker{ display:none; }
-    .mLeft{
-      min-width:0;
-    }
+    .mLeft{ min-width:0; }
     .mSig{
       font-family: var(--mono);
       font-size: 12.5px;
@@ -327,15 +441,15 @@
       color: rgba(255,255,255,.60);
       font-size: 12px;
       font-family: var(--mono);
+      flex: 0 0 auto;
     }
-    details.member[open] .chev{
-      color: var(--text);
-    }
+    details.member[open] .chev{ color: var(--text); }
 
     .mBody{
       padding: 0 12px 12px;
       border-top: 1px solid rgba(255,255,255,.10);
     }
+
     .kv{
       margin-top: 10px;
       padding: 10px;
@@ -345,7 +459,7 @@
     }
     .kTitle{
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
       color: rgba(255,255,255,.82);
       margin-bottom: 6px;
       text-transform: uppercase;
@@ -354,13 +468,15 @@
     .kText{
       font-size: 13px;
       color: rgba(255,255,255,.86);
-      line-height: 1.45;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
     }
     .paramLine{
       font-family: var(--mono);
       font-size: 12.2px;
-      margin: 4px 0;
-      color: rgba(255,255,255,.86);
+      margin: 6px 0;
+      color: rgba(255,255,255,.90);
+      overflow-wrap: anywhere;
     }
     .paramLine span{
       color: var(--muted);
@@ -388,54 +504,88 @@
       color: var(--danger);
       margin-bottom: 8px;
     }
+
     .mono{ font-family: var(--mono); }
 
+    /* Mobile: collapsible sidebar */
+    .mobileBar{
+      display:none;
+      gap:10px;
+      align-items:center;
+      margin: 0 0 12px;
+    }
+    .mobileBar .iconBtn{ width: 100%; }
+
     @media (max-width: 980px){
-      .app{ grid-template-columns: 1fr; }
-      .sidebar{
-        position: relative;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
+      body{ overflow: auto; }
+      .app{
+        grid-template-columns: 1fr;
+        overflow: visible;
       }
+      .resizer{ display:none; }
+      .sidebar{
+        position: fixed;
+        inset: 0 18% 0 0;
+        z-index: 20;
+        transform: translateX(-105%);
+        transition: transform .18s ease;
+        box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      }
+      .sidebar.open{ transform: translateX(0); }
+      .main{
+        height: auto;
+        overflow: visible;
+      }
+      .mobileBar{ display:flex; }
     }
   </style>
 </head>
 
 <body>
   <div class="app">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1>BOOSEInterpreter Docs</h1>
-          <div class="sub">From C# XML comments (api.xml)</div>
+        <div class="brandLeft">
+          <div class="logo"></div>
+          <div class="brandText">
+            <h1>BOOSEInterpreter Docs</h1>
+            <div class="sub">From C# XML comments (api.xml)</div>
+          </div>
         </div>
+        <button class="iconBtn" id="closeSideBtn" title="Close sidebar (mobile)" style="display:none;">Close</button>
       </div>
 
-      <div class="search">
-        <input id="classSearch" placeholder="Search classes…" />
+      <div class="searchRow">
+        <input id="classSearch" placeholder="Search namespaces/classes…" />
       </div>
 
       <div class="pillrow">
-        <div class="pill">Click a class to view docs</div>
+        <div class="pill">Namespace → Class navigation</div>
         <div class="pill">Uses docs/api.xml</div>
       </div>
 
-      <div class="list">
-        <div class="listHeader">
-          <div class="title">Classes</div>
+      <div class="sideSection">
+        <div class="sideHeader">
+          <div class="title">Namespaces</div>
           <div id="classCount" class="count">0</div>
         </div>
-        <div id="classList"></div>
+        <div id="namespaceArea"></div>
       </div>
     </aside>
 
+    <div class="resizer" id="resizer" title="Drag to resize sidebar"></div>
+
     <main class="main">
-      <div class="topbar">
-        <div class="crumbs" id="crumbs">Select a class from the left.</div>
-        <div style="min-width: 280px; width: min(520px, 100%);">
-          <input id="memberSearch" placeholder="Search in selected class…" disabled />
+      <div class="mobileBar">
+        <button class="iconBtn" id="openSideBtn">Open Menu</button>
+      </div>
+
+      <div class="stickyTop">
+        <div class="topbar">
+          <div class="crumbs" id="crumbs">Select a class from the menu.</div>
+          <div style="min-width: 260px; width: min(560px, 100%);">
+            <input id="memberSearch" placeholder="Search members in selected class…" disabled />
+          </div>
         </div>
       </div>
 
@@ -450,7 +600,10 @@
         <div class="content">
           <div class="sectionRow">
             <h2>Members</h2>
-            <div class="tabs" id="tabs"></div>
+            <div class="tabs">
+              <div id="tabs"></div>
+              <div class="toggle" id="densityToggle" title="Toggle compact view">Compact</div>
+            </div>
           </div>
 
           <div id="memberArea"></div>
@@ -466,14 +619,12 @@
         "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
       }[c]));
     }
-
     function normalize(s) {
       return (s || "").trim().replace(/\s+/g, " ");
     }
-
     function splitNamespace(fullTypeName){
       const lastDot = fullTypeName.lastIndexOf(".");
-      if (lastDot === -1) return { ns: "", short: fullTypeName };
+      if (lastDot === -1) return { ns: "(global)", short: fullTypeName };
       return { ns: fullTypeName.slice(0, lastDot), short: fullTypeName.slice(lastDot + 1) };
     }
 
@@ -488,12 +639,8 @@
       const kind = idx >= 0 ? raw.slice(0, idx) : "";
       const rest = idx >= 0 ? raw.slice(idx + 1) : raw;
 
-      // remove params for grouping signature display
       const noParams = rest.split("(")[0];
 
-      // detect class owner (for methods/properties/fields/events)
-      // For M:Namespace.Class.Method -> owner = Namespace.Class
-      // For T:Namespace.Class -> owner = Namespace.Class
       let owner = "";
       let leaf = noParams;
       if (kind === "T") {
@@ -505,9 +652,7 @@
         leaf = lastDot >= 0 ? noParams.slice(lastDot + 1) : noParams;
       }
 
-      // nicer display for constructors
       const displayLeaf = (leaf === "#ctor" || leaf === ".ctor") ? "Constructor" : leaf;
-
       return { kind, full: rest, noParams, owner, leaf: displayLeaf };
     }
 
@@ -557,7 +702,6 @@
 
     // ---------- Build model ----------
     function buildModel(members){
-      // types from T: entries
       const types = new Map(); // fullType -> { summary, remarks }
       for (const m of members){
         if (m.kind === "T"){
@@ -565,7 +709,6 @@
         }
       }
 
-      // class map: fullType -> { info, groups }
       const classes = new Map();
       function ensureClass(typeName){
         if (!classes.has(typeName)){
@@ -573,20 +716,14 @@
           classes.set(typeName, {
             typeName,
             info,
-            groups: {
-              Methods: [],
-              Properties: [],
-              Fields: [],
-              Events: [],
-              Others: []
-            }
+            groups: { Methods: [], Properties: [], Fields: [], Events: [], Others: [] }
           });
         }
         return classes.get(typeName);
       }
 
       for (const m of members){
-        const typeName = m.kind === "T" ? m.owner : m.owner;
+        const typeName = m.owner;
         if (!typeName) continue;
 
         const c = ensureClass(typeName);
@@ -599,7 +736,6 @@
         else c.groups.Others.push(m);
       }
 
-      // sort classes and members
       const classList = Array.from(classes.values()).sort((a,b) => a.typeName.localeCompare(b.typeName));
       for (const c of classList){
         for (const k of Object.keys(c.groups)){
@@ -609,13 +745,30 @@
       return classList;
     }
 
+    // ---------- Namespace tree ----------
+    function buildNamespaceTree(classList){
+      // ns -> [class]
+      const map = new Map();
+      for (const c of classList){
+        const { ns, short } = splitNamespace(c.typeName);
+        if (!map.has(ns)) map.set(ns, []);
+        map.get(ns).push({ typeName: c.typeName, short });
+      }
+      for (const [k, v] of map){
+        v.sort((a,b) => a.short.localeCompare(b.short));
+      }
+      return Array.from(map.entries()).sort((a,b) => a[0].localeCompare(b[0]));
+    }
+
     // ---------- UI state ----------
     let ALL_CLASSES = [];
     let SELECTED = null;
     let ACTIVE_TAB = "Methods";
     let MEMBER_QUERY = "";
+    let COMPACT = false;
 
-    const elClassList = document.getElementById("classList");
+    const elSidebar = document.getElementById("sidebar");
+    const elNamespaceArea = document.getElementById("namespaceArea");
     const elClassCount = document.getElementById("classCount");
     const elClassSearch = document.getElementById("classSearch");
 
@@ -626,6 +779,10 @@
     const elTabs = document.getElementById("tabs");
     const elMemberArea = document.getElementById("memberArea");
     const elMemberSearch = document.getElementById("memberSearch");
+    const elDensityToggle = document.getElementById("densityToggle");
+
+    const openSideBtn = document.getElementById("openSideBtn");
+    const closeSideBtn = document.getElementById("closeSideBtn");
 
     function setSelected(typeName){
       SELECTED = ALL_CLASSES.find(c => c.typeName === typeName) || null;
@@ -633,31 +790,55 @@
       MEMBER_QUERY = "";
       elMemberSearch.value = "";
       elMemberSearch.disabled = !SELECTED;
+
+      // close sidebar on mobile after selecting
+      if (window.matchMedia("(max-width: 980px)").matches){
+        elSidebar.classList.remove("open");
+      }
+
       render();
     }
 
     function renderSidebar(){
       const q = (elClassSearch.value || "").toLowerCase().trim();
+
       const filtered = q
         ? ALL_CLASSES.filter(c => c.typeName.toLowerCase().includes(q))
         : ALL_CLASSES;
 
+      const tree = buildNamespaceTree(filtered);
       elClassCount.textContent = String(filtered.length);
-      elClassList.innerHTML = "";
+      elNamespaceArea.innerHTML = "";
 
-      for (const c of filtered){
-        const { ns, short } = splitNamespace(c.typeName);
-        const btn = document.createElement("button");
-        btn.className = "classItem" + (SELECTED && SELECTED.typeName === c.typeName ? " active" : "");
-        btn.innerHTML = `
-          <div class="classDot"></div>
-          <div class="classMeta">
-            <div class="className">${escapeHtml(short)}</div>
-            <div class="classNs">${escapeHtml(ns || "(global)")}</div>
-          </div>
+      for (const [ns, classes] of tree){
+        const details = document.createElement("details");
+        details.className = "nsItem";
+        details.open = true;
+
+        details.innerHTML = `
+          <summary>
+            <div class="nsTitle">${escapeHtml(ns)}</div>
+            <div class="nsMeta">${classes.length}</div>
+          </summary>
+          <div class="classList"></div>
         `;
-        btn.addEventListener("click", () => setSelected(c.typeName));
-        elClassList.appendChild(btn);
+
+        const list = details.querySelector(".classList");
+        for (const c of classes){
+          const btn = document.createElement("button");
+          btn.className = "classItem" + (SELECTED && SELECTED.typeName === c.typeName ? " active" : "");
+          btn.innerHTML = `
+            <div class="classDot"></div>
+            <div class="classMeta">
+              <div class="className">${escapeHtml(c.short)}</div>
+              <div class="classNs">${escapeHtml(ns)}</div>
+            </div>
+          `;
+          btn.addEventListener("click", () => setSelected(c.typeName));
+          list.appendChild(btn);
+        }
+
+        elNamespaceArea.appendChild(details);
       }
     }
 
@@ -668,11 +849,16 @@
       const keys = ["Methods","Properties","Fields","Events","Others"];
       for (const k of keys){
         const count = SELECTED.groups[k].length;
-        if (count === 0 && k !== "Methods") continue; // keep UI clean; always allow Methods tab
+        if (count === 0 && k !== "Methods") continue;
+
         const t = document.createElement("div");
         t.className = "tab" + (ACTIVE_TAB === k ? " active" : "");
         t.textContent = `${k} (${count})`;
-        t.addEventListener("click", () => { ACTIVE_TAB = k; renderMembers(); renderTabs(); });
+        t.addEventListener("click", () => {
+          ACTIVE_TAB = k;
+          renderMembers();
+          renderTabs();
+        });
         elTabs.appendChild(t);
       }
     }
@@ -690,7 +876,7 @@
       elMemberArea.innerHTML = "";
 
       if (!SELECTED){
-        elMemberArea.innerHTML = `<div class="empty">Select a class from the left to view its documentation.</div>`;
+        elMemberArea.innerHTML = `<div class="empty">Select a class from the menu to view its documentation.</div>`;
         return;
       }
 
@@ -702,11 +888,11 @@
       }
 
       const wrap = document.createElement("div");
-      wrap.className = "memberGrid";
+      wrap.className = "memberGrid" + (COMPACT ? " compact" : "");
 
       for (const m of list){
         const oneLine = m.summary || m.remarks || "(no summary)";
-        const sig = m.noParams; // clean signature (no params)
+        const sig = m.noParams;
 
         const paramsBlock = (m.params && m.params.length)
           ? `
@@ -766,16 +952,17 @@
 
     function renderHeader(){
       if (!SELECTED){
-        elCrumbs.innerHTML = `Select a class from the left.`;
+        elCrumbs.innerHTML = `Select a class from the menu.`;
         elHeroTitle.textContent = "Documentation";
-        elHeroSummary.innerHTML = `This site renders your C# <span class="mono">///</span> XML comments. Copy your generated XML doc file to <span class="mono">docs/api.xml</span>.`;
+        elHeroSummary.innerHTML =
+          `This site renders your C# <span class="mono">///</span> XML comments. Copy your generated XML doc file to <span class="mono">docs/api.xml</span>.`;
         return;
       }
 
       const { ns, short } = splitNamespace(SELECTED.typeName);
-      elCrumbs.innerHTML = `Namespace <code>${escapeHtml(ns || "(global)")}</code>  •  Class <code>${escapeHtml(short)}</code>`;
-
+      elCrumbs.innerHTML = `Namespace <code>${escapeHtml(ns)}</code>  •  Class <code>${escapeHtml(short)}</code>`;
       elHeroTitle.innerHTML = `Class <code>${escapeHtml(short)}</code>`;
+
       const typeSummary = SELECTED.info.summary || SELECTED.info.remarks || "(no summary for this class)";
       elHeroSummary.textContent = typeSummary;
     }
@@ -787,22 +974,63 @@
       renderMembers();
     }
 
+    // ---------- Sidebar resize ----------
+    (function initResizer(){
+      const resizer = document.getElementById("resizer");
+      let dragging = false;
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+      resizer.addEventListener("mousedown", (e) => {
+        dragging = true;
+        document.body.style.userSelect = "none";
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!dragging) return;
+        const w = clamp(e.clientX, 260, 520);
+        document.documentElement.style.setProperty("--side", w + "px");
+      });
+
+      window.addEventListener("mouseup", () => {
+        dragging = false;
+        document.body.style.userSelect = "";
+      });
+    })();
+
+    // ---------- Mobile open/close ----------
+    function refreshMobileButtons(){
+      const isMobile = window.matchMedia("(max-width: 980px)").matches;
+      closeSideBtn.style.display = isMobile ? "inline-block" : "none";
+    }
+    openSideBtn.addEventListener("click", () => elSidebar.classList.add("open"));
+    closeSideBtn.addEventListener("click", () => elSidebar.classList.remove("open"));
+    window.addEventListener("resize", refreshMobileButtons);
+
     // ---------- Init ----------
     (async () => {
       try{
+        refreshMobileButtons();
+
         const xml = await loadXml();
         const members = readMembers(xml);
         ALL_CLASSES = buildModel(members);
-        elClassCount.textContent = String(ALL_CLASSES.length);
 
-        // auto-select first class if available
-        if (ALL_CLASSES.length > 0) setSelected(ALL_CLASSES[0].typeName);
+        // auto-select a useful class: prefer Form1, else first
+        const preferred = ALL_CLASSES.find(c => c.typeName.endsWith(".Form1")) || ALL_CLASSES[0];
+        if (preferred) setSelected(preferred.typeName);
         else render();
 
         elClassSearch.addEventListener("input", renderSidebar);
 
         elMemberSearch.addEventListener("input", () => {
           MEMBER_QUERY = (elMemberSearch.value || "").trim();
+          renderMembers();
+        });
+
+        elDensityToggle.addEventListener("click", () => {
+          COMPACT = !COMPACT;
+          elDensityToggle.classList.toggle("on", COMPACT);
           renderMembers();
         });
 

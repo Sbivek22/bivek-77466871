@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Dell\\source\\repos\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj": {}
+    "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Dell\\source\\repos\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj": {
+    "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Dell\\source\\repos\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
+        "projectUniqueName": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
         "projectName": "BOOSEInterpreter",
-        "projectPath": "C:\\Users\\Dell\\source\\repos\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
+        "projectPath": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Dell\\source\\repos\\BOOSEInterpreter\\BOOSEInterpreter\\obj\\",
+        "outputPath": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

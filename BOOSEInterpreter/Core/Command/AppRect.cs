@@ -1,76 +1,61 @@
 ﻿using BOOSE;
+using System;
 using BOOSEInterpreter.Canvas;
+using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
 {
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
     /// <summary>
-    /// Command that draws a rectangle on the application's canvas.
-    /// Implements <see cref="ICommand"/> so it can be used by the interpreter.
+    /// Command that draws an unfilled rectangle on the canvas. The command expects two
+    /// parameters representing the rectangle's width and height in pixels.
     /// </summary>
-    public class AppRect : ICommand
+    /// <remarks>
+    /// <see cref="AppRect"/> inherits from <see cref="CommandTwoParameters"/>, which provides
+    /// the <see cref="ParameterList"/> and <see cref="Program"/> context. Parameters are
+    /// evaluated using <see cref="BOOSEInterpreter.Core.Runtime.BooseEval.Int"/>. A
+    /// <see cref="CommandException"/> is raised if the command is not initialised or if the
+    /// parameters are missing or invalid.
+    /// </remarks>
+    public class AppRect : CommandTwoParameters
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
-        /// <summary>
-        /// The canvas used to render the rectangle.
-        /// </summary>
-        private readonly PanelCanvas canvas;
+    private readonly PanelCanvas _canvas;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AppRect"/> command.
+    /// </summary>
+    /// <param name="c">The <see cref="PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
+    public AppRect(PanelCanvas c) => _canvas = c;
 
         /// <summary>
-        /// Width of the rectangle to draw. Set during <see cref="Set"/>.
+        /// Executes the command by parsing and evaluating the width and height parameters and
+        /// invoking <see cref="PanelCanvas.Rect(int,int,bool)"/> with the evaluated values
+        /// and <c>false</c> to indicate an outline-only rectangle.
         /// </summary>
-        private int width;
-
-        /// <summary>
-        /// Height of the rectangle to draw. Set during <see cref="Set"/>.
-        /// </summary>
-        private int height;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AppRect"/> class.
-        /// </summary>
-        /// <param name="c">The <see cref="PanelCanvas"/> used for drawing.</param>
-        public AppRect(PanelCanvas c)
+        /// <exception cref="CommandException">Thrown when the command lacks a program or when
+        /// parameters are empty or not exactly two values.</exception>
+        public override void Execute()
         {
-            canvas = c;
-        }
+            if (Program == null)
+                throw new CommandException("Rect has not been initialised with a StoredProgram.");
 
-        /// <summary>
-        /// Configures the command with program context and the parameter list.
-        /// Expected <paramref name="paramList"/> contains two comma-separated integers: width and height.
-        /// </summary>
-        /// <param name="program">The <see cref="StoredProgram"/> context (unused).</param>
-        /// <param name="paramList">A comma-separated string with width and height.</param>
-        public void Set(StoredProgram program, string paramList)
-        {
-            var parts = paramList.Split(',');
-            width = int.Parse(parts[0]);
-            height = int.Parse(parts[1]);
-        }
+            string raw = (ParameterList ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(raw))
+                throw new CommandException("Rect requires 2 parameters.");
 
-        /// <summary>
-        /// Performs compilation-time checks or transformations for the command.
-        /// This command imposes no compile-time restrictions.
-        /// </summary>
-        public void Compile()
-        {
-            // no restrictions
-        }
+            // Support both comma and space forms.
+            string[] parts = raw.Contains(",")
+                ? raw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                : raw.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        /// <summary>
-        /// Validates parameter array for this command. This implementation accepts any parameters
-        /// (validation is performed in <see cref="Set"/> by parsing the string).
-        /// </summary>
-        /// <param name="parameters">Array of parameter strings to check.</param>
-        public void CheckParameters(string[] parameters)
-        {
-            // unrestricted → do nothing
-        }
+            if (parts.Length != 2)
+                throw new CommandException("Rect requires exactly 2 parameters.");
 
-        /// <summary>
-        /// Executes the command by drawing a rectangle with the configured width and height on the canvas.
-        /// </summary>
-        public void Execute()
-        {
-            canvas.Rect(width, height, false);
+            int width = BooseEval.Int(Program, parts[0]);
+            int height = BooseEval.Int(Program, parts[1]);
+
+            _canvas.Rect(width, height, false);
         }
     }
 }

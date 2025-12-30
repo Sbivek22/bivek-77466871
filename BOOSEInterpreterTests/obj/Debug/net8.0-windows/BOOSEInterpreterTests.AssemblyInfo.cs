@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BOOSEInterpreterTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6934572094ae829c405ba3085876db966f119768")]
 [assembly: System.Reflection.AssemblyProductAttribute("BOOSEInterpreterTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BOOSEInterpreterTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

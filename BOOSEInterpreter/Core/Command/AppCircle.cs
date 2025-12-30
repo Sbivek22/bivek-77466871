@@ -1,69 +1,65 @@
 ﻿using BOOSE;
+using System;
 using BOOSEInterpreter.Canvas;
+using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
 {
+#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
     /// <summary>
-    /// Command that draws a circle on the application's canvas.
-    /// Implements <see cref="ICommand"/> so it can be used by the interpreter.
+    /// Command that draws a circle on the application canvas. The command evaluates a single
+    /// parameter expression (typically an integer radius) and instructs the provided
+    /// <see cref="PanelCanvas"/> instance to draw an unfilled circle at the current pen
+    /// position.
     /// </summary>
-    public class AppCircle : ICommand
+    /// <remarks>
+    /// <see cref="AppCircle"/> inherits from <see cref="CommandOneParameter"/>, which provides
+    /// the textual <see cref="ParameterList"/> and the <see cref="Program"/> context used for
+    /// evaluation. The command uses <see cref="BOOSEInterpreter.Core.Runtime.BooseEval"/>
+    /// to convert the parameter expression to an integer radius. The command will throw a
+    /// <see cref="CommandException"/> if it is not initialised with a valid program or if the
+    /// parameter is missing or invalid.
+    /// </remarks>
+    public class AppCircle : CommandOneParameter
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
         /// <summary>
-        /// The canvas used to render the circle.
+        /// The canvas instance used to render the circle.
         /// </summary>
-        private readonly PanelCanvas canvas;
+        private readonly PanelCanvas _canvas;
 
         /// <summary>
-        /// Radius of the circle to draw. Set during <see cref="Set"/>.
+        /// Initializes a new instance of the <see cref="AppCircle"/> class using the
+        /// specified <see cref="PanelCanvas"/> for rendering.
         /// </summary>
-        private int radius;
+        /// <param name="c">The canvas that will receive the circle drawing commands. Must not be <c>null</c>.</param>
+        public AppCircle(PanelCanvas c) => _canvas = c;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppCircle"/> class.
+        /// Executes the circle command. The method:
+        /// - Validates that the command has been initialised with a <see cref="Program"/>.
+        /// - Reads and trims the textual <see cref="ParameterList"/> and ensures a single
+        ///   parameter is present.
+        /// - Evaluates the expression to an integer radius using
+        ///   <see cref="BOOSEInterpreter.Core.Runtime.BooseEval.Int"/>.
+        /// - Calls <see cref="PanelCanvas.Circle(int,bool)"/> with the computed radius and
+        ///   <c>false</c> for the filled flag (draw outline only).
         /// </summary>
-        /// <param name="c">The <see cref="PanelCanvas"/> used for drawing.</param>
-        public AppCircle(PanelCanvas c)
+        /// <exception cref="CommandException">Thrown when the command has no associated program or when
+        /// the required parameter is missing/invalid.</exception>
+        public override void Execute()
         {
-            canvas = c;
-        }
+            if (Program == null)
+                throw new CommandException("Circle has not been initialised with a StoredProgram.");
 
-        /// <summary>
-        /// Configures the command with program context and the parameter list.
-        /// Expected <paramref name="paramList"/> is a single integer representing the radius.
-        /// </summary>
-        /// <param name="program">The <see cref="StoredProgram"/> context (unused).</param>
-        /// <param name="paramList">A string containing the parameter(s) for the command.</param>
-        public void Set(StoredProgram program, string paramList)
-        {
-            radius = int.Parse(paramList);
-        }
+            // Use our evaluator (BOOSE trial evaluator can reject '*' which breaks examples
+            // like: circle count * 10).
+            string exp = (ParameterList ?? string.Empty).Trim();
+            if (string.IsNullOrWhiteSpace(exp))
+                throw new CommandException("Circle requires 1 parameter.");
 
-        /// <summary>
-        /// Performs compilation-time checks or transformations for the command.
-        /// This command imposes no compile-time restrictions.
-        /// </summary>
-        public void Compile()
-        {
-            // no restrictions
-        }
-
-        /// <summary>
-        /// Validates parameter array for this command. This implementation accepts any parameters
-        /// (validation is performed in <see cref="Set"/> by parsing the string).
-        /// </summary>
-        /// <param name="parameters">Array of parameter strings to check.</param>
-        public void CheckParameters(string[] parameters)
-        {
-            // unrestricted → do nothing
-        }
-
-        /// <summary>
-        /// Executes the command by drawing a circle with the configured radius on the canvas.
-        /// </summary>
-        public void Execute()
-        {
-            canvas.Circle(radius, false);
+            int radius = BooseEval.Int(Program, exp);
+            _canvas.Circle(radius, false);
         }
     }
 }

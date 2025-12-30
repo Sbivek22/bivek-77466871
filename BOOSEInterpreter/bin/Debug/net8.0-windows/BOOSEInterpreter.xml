@@ -6,140 +6,234 @@
     <members>
         <member name="T:BOOSEInterpreter.Canvas.PanelCanvas">
             <summary>
-            An implementation of <see cref="T:BOOSE.ICanvas"/> that draws onto a <see cref="T:System.Windows.Forms.PictureBox"/> control.
-            The class manages an internal <see cref="T:System.Drawing.Bitmap"/> and <see cref="T:System.Drawing.Graphics"/> object used
-            for rendering shapes, text and images.
+            An <see cref="T:BOOSE.ICanvas"/> implementation that renders drawing operations onto a
+            <see cref="T:System.Windows.Forms.PictureBox"/> control by maintaining an internal <see cref="T:System.Drawing.Bitmap"/> and
+            associated <see cref="T:System.Drawing.Graphics"/> instance.
             </summary>
-            
+            <remarks>
+            The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> class provides simple drawing primitives (lines, circles,
+            rectangles, triangles and text) and manages an in-memory bitmap which is assigned to the
+            provided <see cref="T:System.Windows.Forms.PictureBox"/> via its <see cref="P:System.Windows.Forms.PictureBox.Image"/> property.
+            Methods are not thread-safe and should be called from the UI thread that owns the
+            <see cref="T:System.Windows.Forms.PictureBox"/>. The class expects color values to be provided as a
+            <see cref="T:System.Drawing.Color"/> stored in the <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/> property.
+            </remarks>
         </member>
         <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.bitmap">
             <summary>
-            Backing bitmap used as the drawing surface.
+            The backing <see cref="T:System.Drawing.Bitmap"/> instance that represents the pixel buffer used for
+            all drawing operations. This bitmap is assigned to the host <see cref="T:System.Windows.Forms.PictureBox"/>
+            so that the UI displays the current drawing state.
             </summary>
         </member>
         <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.graphics">
             <summary>
-            Graphics object obtained from <see cref="F:BOOSEInterpreter.Canvas.PanelCanvas.bitmap"/> used to perform drawing operations.
+            The <see cref="T:System.Drawing.Graphics"/> object created from <see cref="F:BOOSEInterpreter.Canvas.PanelCanvas.bitmap"/>. All drawing
+            primitives (lines, shapes, text) are executed through this object. It is recreated
+            whenever the internal bitmap is replaced via <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)"/>.
             </summary>
         </member>
         <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.Xpos">
             <summary>
-            Current X position for drawing operations.
+            The current X coordinate of the logical pen. Several drawing operations (for
+            example <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)"/>, <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)"/>) use this
+            position as their origin or start point. Coordinates are expressed in pixels relative
+            to the top-left corner of the canvas.
             </summary>
         </member>
         <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.Ypos">
             <summary>
-            Current Y position for drawing operations.
+            The current Y coordinate of the logical pen. See <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.Xpos"/> for additional
+            details about the coordinate system and usage.
             </summary>
         </member>
         <member name="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour">
             <summary>
-            Current pen/brush colour used for drawing. Stored as <see cref="T:System.Object"/> to match the
-            interpreter's canvas interface but is expected to hold a <see cref="T:System.Drawing.Color"/> instance.
-            Defaults to <see cref="P:System.Drawing.Color.Black"/>.
+            The colour used for subsequent drawing operations. The property type is <see cref="T:System.Object"/>
+            for compatibility with the surrounding interpreter infrastructure, but callers should
+            assign and expect a <see cref="T:System.Drawing.Color"/> value. The default value is
+            <see cref="P:System.Drawing.Color.Black"/>.
             </summary>
+            <remarks>
+            When used, callers typically cast this value to <see cref="T:System.Drawing.Color"/>. Setting the
+            property to an incompatible type will result in an <see cref="T:System.InvalidCastException"/>
+            at the point of drawing.
+            </remarks>
         </member>
         <member name="F:BOOSEInterpreter.Canvas.PanelCanvas.output">
             <summary>
-            The <see cref="T:System.Windows.Forms.PictureBox"/> control that displays the canvas bitmap to the user.
+            The <see cref="T:System.Windows.Forms.PictureBox"/> control that is used to present the current
+            <see cref="T:System.Drawing.Bitmap"/> to the user. The control's <see cref="P:System.Windows.Forms.PictureBox.Image"/> property
+            is updated whenever the bitmap changes.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.#ctor(System.Windows.Forms.PictureBox)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> class using the provided
-            <see cref="T:System.Windows.Forms.PictureBox"/> as the display target. If the control already has a positive
-            size, the internal bitmap/graphics objects are created immediately.
+            Creates a new <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> bound to the supplied <see cref="T:System.Windows.Forms.PictureBox"/>.
             </summary>
-            <param name="box">The picture box that will display the canvas.</param>
+            <param name="box">The <see cref="T:System.Windows.Forms.PictureBox"/> that will display the drawing surface.
+            Must not be <c>null</c>. The caller is responsible for ensuring the control is
+            created on the UI thread.</param>
+            <remarks>
+            If <paramref name="box"/> already has a non-zero size at construction time, an
+            internal bitmap is created immediately with that size by calling
+            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)"/>. Otherwise the surface will be created when the UI
+            initializes the control size and an explicit call to <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)"/> is
+            made.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)">
             <summary>
-            Creates or replaces the internal bitmap and graphics objects with the specified size
-            and clears the surface to white.
+            Allocates a new internal drawing surface with the specified pixel dimensions and
+            resets the rendering context.
             </summary>
-            <param name="width">Width of the drawing surface in pixels.</param>
-            <param name="height">Height of the drawing surface in pixels.</param>
+            <param name="width">The width of the new bitmap in pixels. Must be greater than zero.</param>
+            <param name="height">The height of the new bitmap in pixels. Must be greater than zero.</param>
+            <remarks>
+            Any existing bitmap/graphics objects are replaced. The new surface is cleared to
+            white and assigned to the bound <see cref="T:System.Windows.Forms.PictureBox"/> control. Callers should
+            ensure the provided dimensions match the display control to avoid scaling artifacts.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)">
             <summary>
-            Moves the current pen position to the specified coordinates without drawing.
+            Updates the logical pen position to the provided coordinates without emitting any
+            drawing primitives. Subsequent drawing operations will use this position as their
+            origin or start point.
             </summary>
-            <param name="x">New X coordinate.</param>
-            <param name="y">New Y coordinate.</param>
+            <param name="x">The new X coordinate in pixels.</param>
+            <param name="y">The new Y coordinate in pixels.</param>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)">
             <summary>
-            Draws a line from the current pen position to the specified coordinates and updates
-            the current position to the target point.
-            </summary>
-            <param name="x">Target X coordinate.</param>
-            <param name="y">Target Y coordinate.</param>
+            Draws a straight line from the current logical pen position to the specified
+            destination coordinates. After the call the pen position is updated to the target
+            point.</summary>
+            <param name="x">Destination X coordinate in pixels.</param>
+            <param name="y">Destination Y coordinate in pixels.</param>
+            <remarks>
+            The line is drawn using a pen of width 2 and the colour provided by
+            <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/>. The method calls <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Refresh"/> to update the
+            UI after drawing. If <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/> cannot be cast to
+            <see cref="T:System.Drawing.Color"/>, an exception will be thrown.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)">
             <summary>
-            Draws a circle centered at the current pen position.
+            Draws a circle (ellipse with equal width and height) centered on the current pen
+            position. The circle may be filled or outlined depending on <paramref name="filled"/>.
             </summary>
-            <param name="radius">Radius of the circle in pixels.</param>
-            <param name="filled">If <c>true</c>, the circle is filled; otherwise only the outline is drawn.</param>
+            <param name="radius">The radius of the circle in pixels. Must be non-negative.</param>
+            <param name="filled">If <c>true</c> the shape is filled using a solid brush, otherwise
+            only the outline is rendered using a pen.</param>
+            <remarks>
+            The drawing operation uses <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/> for both outline and fill. Calling
+            code should ensure the radius is reasonable for the current canvas size.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)">
             <summary>
-            Draws a rectangle with the top-left corner at the current pen position.
+            Draws a rectangle whose top-left corner is the current pen position. The rectangle
+            may be filled or outlined depending on <paramref name="filled"/>.
             </summary>
-            <param name="width">Width of the rectangle in pixels.</param>
-            <param name="height">Height of the rectangle in pixels.</param>
-            <param name="filled">If <c>true</c>, the rectangle is filled; otherwise only the outline is drawn.</param>
+            <param name="width">The width of the rectangle in pixels.</param>
+            <param name="height">The height of the rectangle in pixels.</param>
+            <param name="filled">If <c>true</c> the interior is filled; otherwise only the
+            border is drawn.</param>
+            <remarks>
+            Width/height values that cause the rectangle to extend outside the bitmap will
+            be clipped by the underlying <see cref="T:System.Drawing.Graphics"/> implementation.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)">
             <summary>
-            Draws an isosceles triangle with the base starting at the current pen position.
-            The triangle's base spans <paramref name="width"/> pixels and its height is <paramref name="height"/> pixels.
+            Draws an isosceles triangle where the base's left corner is at the current pen
+            position and the triangle extends downwards by <paramref name="height"/> pixels.
             </summary>
-            <param name="width">Width of the triangle base in pixels.</param>
-            <param name="height">Height of the triangle in pixels.</param>
+            <param name="width">The width of the triangle base in pixels.</param>
+            <param name="height">The vertical height of the triangle in pixels.</param>
+            <remarks>
+            The triangle's vertices are calculated so that the apex is centered horizontally
+            above the base. The shape is drawn using the current <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/> as
+            the outline colour with a pen width of 2.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Clear">
             <summary>
-            Clears the drawing surface to white and refreshes the display.
+            Clears the entire drawing surface by filling it with white and requests a UI
+            refresh so the cleared state becomes visible to the user.
             </summary>
+            <remarks>
+            This method only clears the internal <see cref="T:System.Drawing.Bitmap"/> and does not change pen
+            position or colour; to reset those values use <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Reset"/>.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Reset">
             <summary>
-            Resets the drawing state: pen position to (0,0) and colour to black.
+            Resets the drawing state by setting the logical pen position to (0,0) and the
+            drawing colour to black. Does not clear the bitmap; use <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Clear"/> to
+            erase existing content.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)">
             <summary>
-            Sets the pen colour using RGB components.
+            Sets the current drawing colour using explicit red, green and blue components.
             </summary>
-            <param name="r">Red component (0-255).</param>
-            <param name="g">Green component (0-255).</param>
-            <param name="b">Blue component (0-255).</param>
+            <param name="r">Red channel (0-255).</param>
+            <param name="g">Green channel (0-255).</param>
+            <param name="b">Blue channel (0-255).</param>
+            <remarks>
+            Values outside the 0–255 range will be clamped by the
+            <see cref="M:System.Drawing.Color.FromArgb(System.Int32,System.Int32,System.Int32)"/> method.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)">
             <summary>
-            Writes text at the current pen position using a default font.
+            Renders the provided text string at the current pen coordinates using a default
+            sans-serif font. After drawing the method triggers a UI refresh.
             </summary>
-            <param name="text">The text to draw.</param>
+            <param name="text">The text to draw. If <c>null</c> the method will throw an
+            <see cref="T:System.ArgumentNullException"/> when attempting to draw; callers should ensure
+            a valid string is provided.</param>
+            <remarks>
+            The method uses an <see cref="T:System.Drawing.Font"/> of Arial, size 14 and draws the string using
+            a <see cref="T:System.Drawing.SolidBrush"/> created from <see cref="P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour"/>.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.getBitmap">
             <summary>
-            Returns the underlying bitmap used by the canvas. The return type is <see cref="T:System.Object"/>
-            to match the usage in the application UI code.
+            Returns the underlying <see cref="T:System.Drawing.Bitmap"/> instance used as the in-memory drawing
+            surface. The method signature returns <see cref="T:System.Object"/> for compatibility with
+            existing caller expectations in the application code.
             </summary>
-            <returns>The <see cref="T:System.Drawing.Bitmap"/> instance used as the drawing surface.</returns>
+            <returns>The <see cref="T:System.Drawing.Bitmap"/> currently used as the canvas pixel buffer, or
+            <c>null</c> if <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)"/> has not been called.</returns>
         </member>
         <member name="M:BOOSEInterpreter.Canvas.PanelCanvas.Refresh">
             <summary>
-            Updates the picture box to display the current bitmap and forces a redraw of the control.
+            Assigns the current internal bitmap to the bound <see cref="P:System.Windows.Forms.PictureBox.Image"/>
+            property and forces an immediate repaint of the control so that recent drawing
+            operations become visible.
             </summary>
+            <remarks>
+            This helper method is private because it manipulates UI elements; it should be
+            invoked from the UI thread. The method performs a direct assignment to the
+            <see cref="P:System.Windows.Forms.PictureBox.Image"/> property which may replace any previously set image
+            reference.
+            </remarks>
         </member>
         <member name="T:BOOSEInterpreter.Core.AppCommandFactory">
             <summary>
             Factory that creates application-specific command implementations for the BOOSE interpreter.
-            Extends the base <see cref="T:BOOSE.CommandFactory"/> to return commands that operate on the
-            application's <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/>.
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.AppCommandFactory"/> extends the base <see cref="T:BOOSE.CommandFactory"/> and returns
+            command implementations that integrate with the application's <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> where
+            drawing or canvas access is required. For language constructs that have unrestricted
+            replacements (e.g. <c>int</c>, <c>real</c>, <c>array</c>, control-flow commands), the factory
+            returns the corresponding <c>App*</c> replacement implementations. If a command name is not
+            recognised the factory falls back to the base implementation by calling <see cref="M:BOOSE.CommandFactory.MakeCommand(System.String)"/>.
+            </remarks>
         </member>
         <member name="F:BOOSEInterpreter.Core.AppCommandFactory.canvas">
             <summary>
@@ -154,242 +248,229 @@
         </member>
         <member name="M:BOOSEInterpreter.Core.AppCommandFactory.MakeCommand(System.String)">
             <summary>
-            Creates an <see cref="T:BOOSE.ICommand"/> instance for the given command <paramref name="name"/>.
-            Returns application-specific command implementations where available; otherwise falls back
-            to the base factory behavior.
+            Create an <see cref="T:BOOSE.ICommand"/> instance for the provided command <paramref name="name"/>.
             </summary>
             <param name="name">The command name to create (case-insensitive).</param>
-            <returns>An <see cref="T:BOOSE.ICommand"/> instance for the requested command.</returns>
+            <returns>An <see cref="T:BOOSE.ICommand"/> instance that implements the requested command. If the
+            command name is not handled by this factory the method delegates to <see cref="M:BOOSE.CommandFactory.MakeCommand(System.String)"/>.</returns>
+            <remarks>
+            The factory maps a set of known command names to their application-specific implementations.
+            Drawing-related commands receive the <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance supplied to the
+            factory constructor. Control-flow and replacement commands (such as <c>int</c>, <c>real</c>,
+            <c>array</c>, <c>if</c>, <c>for</c>, <c>while</c>, <c>end</c>, <c>method</c>, <c>call</c>) are
+            provided as unrestricted replacements by returning the corresponding <c>App*</c> types.
+            </remarks>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppCircle">
             <summary>
-            Command that draws a circle on the application's canvas.
-            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            Command that draws a circle on the application canvas. The command evaluates a single
+            parameter expression (typically an integer radius) and instructs the provided
+            <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance to draw an unfilled circle at the current pen
+            position.
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppCircle"/> inherits from <see cref="T:BOOSE.CommandOneParameter"/>, which provides
+            the textual <see cref="!:ParameterList"/> and the <see cref="T:BOOSEInterpreter.Program"/> context used for
+            evaluation. The command uses <see cref="T:BOOSEInterpreter.Core.Runtime.BooseEval"/>
+            to convert the parameter expression to an integer radius. The command will throw a
+            <see cref="T:BOOSE.CommandException"/> if it is not initialised with a valid program or if the
+            parameter is missing or invalid.
+            </remarks>
         </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppCircle.canvas">
+        <member name="F:BOOSEInterpreter.Core.Command.AppCircle._canvas">
             <summary>
-            The canvas used to render the circle.
-            </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppCircle.radius">
-            <summary>
-            Radius of the circle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)"/>.
+            The canvas instance used to render the circle.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppCircle.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppCircle"/> class.
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppCircle"/> class using the
+            specified <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> for rendering.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)">
-            <summary>
-            Configures the command with program context and the parameter list.
-            Expected <paramref name="paramList"/> is a single integer representing the radius.
-            </summary>
-            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
-            <param name="paramList">A string containing the parameter(s) for the command.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Compile">
-            <summary>
-            Performs compilation-time checks or transformations for the command.
-            This command imposes no compile-time restrictions.
-            </summary>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.CheckParameters(System.String[])">
-            <summary>
-            Validates parameter array for this command. This implementation accepts any parameters
-            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppCircle.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
-            </summary>
-            <param name="parameters">Array of parameter strings to check.</param>
+            <param name="c">The canvas that will receive the circle drawing commands. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppCircle.Execute">
             <summary>
-            Executes the command by drawing a circle with the configured radius on the canvas.
+            Executes the circle command. The method:
+            - Validates that the command has been initialised with a <see cref="T:BOOSEInterpreter.Program"/>.
+            - Reads and trims the textual <see cref="!:ParameterList"/> and ensures a single
+              parameter is present.
+            - Evaluates the expression to an integer radius using
+              <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/>.
+            - Calls <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)"/> with the computed radius and
+              <c>false</c> for the filled flag (draw outline only).
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command has no associated program or when
+            the required parameter is missing/invalid.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppDrawTo">
             <summary>
-            Command that draws a line from the current pen position to the specified coordinates.
-            Inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            Command that draws a straight line from the current pen position to the specified
+            coordinates. The command expects two parameters (X and Y) which are evaluated in the
+            current program context and converted to integer pixel coordinates.
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppDrawTo"/> inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which
+            provides access to the textual <see cref="!:ParameterList"/> and the
+            <see cref="T:BOOSEInterpreter.Program"/> execution context. The command uses
+            <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/> to evaluate each parameter.
+            A <see cref="T:BOOSE.CommandException"/> is thrown when the command is not initialised with a
+            program or when parameters are missing or invalid.
+            </remarks>
         </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppDrawTo.canvas">
+        <member name="F:BOOSEInterpreter.Core.Command.AppDrawTo._canvas">
             <summary>
-            The canvas used to render the line.
+            The canvas that will be used to render the line.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppDrawTo"/> class.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.Execute">
             <summary>
-            Executes the draw operation using the first two parameters from <see cref="!:ParameterList"/>.
-            Parameters are expected to be numeric; they are converted to integers and used as X and Y.
+            Executes the command by validating and parsing the two required parameters, evaluating
+            them to integer coordinates, and invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)"/>.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command lacks a program, when the
+            parameter list is empty, or when the wrong number of parameters is provided.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppMoveTo">
             <summary>
-            Command that moves the current drawing position to the specified coordinates.
-            Inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            Command that updates the current pen position without drawing. Expects two
+            parameters (X and Y) which are evaluated and converted to integer coordinates.
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppMoveTo"/> inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which
+            supplies the textual <see cref="!:ParameterList"/>. Parameter evaluation is delegated
+            to <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/>. The command throws a
+            <see cref="T:BOOSE.CommandException"/> if it is not initialised with a program or if
+            parameters are missing or malformed.
+            </remarks>
         </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppMoveTo.canvas">
+        <member name="F:BOOSEInterpreter.Core.Command.AppMoveTo._canvas">
             <summary>
-            The canvas used to update the current pen position.
+            The canvas whose current pen position will be modified.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppMoveTo"/> command.
+            Initializes a new <see cref="T:BOOSEInterpreter.Core.Command.AppMoveTo"/> instance that operates on the provided canvas.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to update. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.Execute">
             <summary>
-            Executes the move operation using the first two parameters from <see cref="!:ParameterList"/>.
-            Parameters are expected to be numeric; they are converted to integers and used as X and Y.
+            Executes the move operation: validates parameters, evaluates them to integers and
+            calls <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)"/> to set the new pen position.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command has no program or when
+            parameters are missing or not exactly two in number.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppPenColour">
             <summary>
-            Command that sets the pen colour for subsequent drawing operations.
-            Inherits from <see cref="T:BOOSE.CommandThreeParameters"/>, which provides a parsed <see cref="!:ParameterList"/>.
+            Command that sets the pen colour used for subsequent drawing operations. Expects
+            three numeric parameters representing the red, green and blue channels (0-255).
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> inherits from <see cref="T:BOOSE.CommandThreeParameters"/>, which
+            provides the <see cref="!:ParameterList"/> textual data. Parameters are evaluated using
+            <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/> and applied to the canvas via
+            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>. The command will throw a
+            <see cref="T:BOOSE.CommandException"/> when not initialised with a program or when parameters
+            are missing or incorrectly formed.
+            </remarks>
         </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppPenColour.canvas">
+        <member name="F:BOOSEInterpreter.Core.Command.AppPenColour._canvas">
             <summary>
-            The canvas whose drawing colour will be changed.
+            The target canvas whose pen colour will be modified.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> class.
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> command.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will operate on.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to update. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.Execute">
             <summary>
-            Executes the command by reading three numeric parameters (R, G, B) from
-            <see cref="!:ParameterList"/>, converting them to integers, and applying the
-            resulting colour to the canvas via <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>.
+            Executes the command by parsing three color components (R, G, B) from the
+            <see cref="!:ParameterList"/>, evaluating them to integers and calling
+            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command has no program, when the
+            parameter list is empty or not exactly three values.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppRect">
             <summary>
-            Command that draws a rectangle on the application's canvas.
-            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            Command that draws an unfilled rectangle on the canvas. The command expects two
+            parameters representing the rectangle's width and height in pixels.
             </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppRect.canvas">
-            <summary>
-            The canvas used to render the rectangle.
-            </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppRect.width">
-            <summary>
-            Width of the rectangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/>.
-            </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppRect.height">
-            <summary>
-            Height of the rectangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/>.
-            </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppRect"/> inherits from <see cref="T:BOOSE.CommandTwoParameters"/>, which provides
+            the <see cref="!:ParameterList"/> and <see cref="T:BOOSEInterpreter.Program"/> context. Parameters are
+            evaluated using <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/>. A
+            <see cref="T:BOOSE.CommandException"/> is raised if the command is not initialised or if the
+            parameters are missing or invalid.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppRect.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppRect"/> class.
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppRect"/> command.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)">
-            <summary>
-            Configures the command with program context and the parameter list.
-            Expected <paramref name="paramList"/> contains two comma-separated integers: width and height.
-            </summary>
-            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
-            <param name="paramList">A comma-separated string with width and height.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppRect.Compile">
-            <summary>
-            Performs compilation-time checks or transformations for the command.
-            This command imposes no compile-time restrictions.
-            </summary>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppRect.CheckParameters(System.String[])">
-            <summary>
-            Validates parameter array for this command. This implementation accepts any parameters
-            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppRect.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
-            </summary>
-            <param name="parameters">Array of parameter strings to check.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppRect.Execute">
             <summary>
-            Executes the command by drawing a rectangle with the configured width and height on the canvas.
+            Executes the command by parsing and evaluating the width and height parameters and
+            invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)"/> with the evaluated values
+            and <c>false</c> to indicate an outline-only rectangle.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command lacks a program or when
+            parameters are empty or not exactly two values.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppTriCommand">
             <summary>
-            Command that draws a triangle on the application's canvas.
-            Implements <see cref="T:BOOSE.ICommand"/> so it can be used by the interpreter.
+            Command that draws an isosceles triangle on the canvas. The command expects two
+            parameters: the base width and the triangle height, both evaluated as integers.
             </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.canvas">
-            <summary>
-            The canvas used to render the triangle.
-            </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.w">
-            <summary>
-            Width of the triangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/>.
-            </summary>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppTriCommand.h">
-            <summary>
-            Width of the triangle to draw. Set during <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/>.
-            </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppTriCommand"/> derives from <see cref="T:BOOSE.CommandTwoParameters"/>, which
+            provides access to the textual <see cref="!:ParameterList"/> and the current
+            <see cref="T:BOOSEInterpreter.Program"/>. Parameter evaluation uses
+            <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/>. Errors in initialization
+            or parameter parsing result in a <see cref="T:BOOSE.CommandException"/>.
+            </remarks>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppTriCommand"/> class.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used for drawing.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)">
-            <summary>
-            Configures the command with program context and the parameter list.
-            Expected <paramref name="paramList"/> contains two comma-separated integers: width and height.
-            </summary>
-            <param name="program">The <see cref="T:BOOSE.StoredProgram"/> context (unused).</param>
-            <param name="paramList">A comma-separated string with width and height.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Compile">
-            <summary>
-            Performs compilation-time checks or transformations for the command.
-            This command imposes no compile-time restrictions.
-            </summary>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(System.String[])">
-            <summary>
-            Validates parameter array for this command. This implementation accepts any parameters
-            (validation is performed in <see cref="M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)"/> by parsing the string).
-            </summary>
-            <param name="parameters">Array of parameter strings to check.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Execute">
             <summary>
-            Executes the command by drawing a triangle with the configured width and height on the canvas.
+            Executes the command by validating, parsing and evaluating the width and height
+            parameters and invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)"/> to draw the
+            triangle.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command has no program or when
+            parameters are missing, empty, or not exactly two values.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppWrite">
             <summary>
-            Application-specific implementation of the <see cref="T:BOOSE.Write"/> command.
-            When executed, this command writes the evaluated expression text to the provided canvas.
+            Application-specific implementation of the <see cref="T:BOOSE.Write"/> command that renders
+            evaluated text to a <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance.
             </summary>
+            <remarks>
+            <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> evaluates the textual expression contained in
+            <see cref="!:ParameterList"/> in the context of the associated <see cref="T:BOOSEInterpreter.Program"/>
+            and writes the resulting string to the canvas using <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)"/>.
+            If the expression refers to a boolean variable stored in the program, the command
+            writes "true" or "false" instead of the variable object's textual form.
+            </remarks>
         </member>
         <member name="F:BOOSEInterpreter.Core.Command.AppWrite.canvas">
             <summary>
@@ -398,15 +479,823 @@
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppWrite.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
             <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> class.
+            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> class with the provided canvas.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used to draw the output text.</param>
+            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used to draw the output text. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppWrite.Execute">
             <summary>
-            Executes the write command. Calls the base implementation to evaluate the expression
-            and then writes the resulting text to the canvas.
+            Executes the write command. The method validates that a <see cref="T:BOOSEInterpreter.Program"/> is
+            associated with the command, reads the expression from <see cref="!:ParameterList"/>
+            and evaluates it to a string using <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.String(BOOSE.StoredProgram,System.String)"/>.
+            If the expression names a boolean variable in the program, the boolean value is
+            printed as "true"/"false". The resulting text is written to the canvas via
+            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)"/>.
             </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command has not been initialised
+            with a <see cref="T:BOOSEInterpreter.Program"/>.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppArray">
+            <summary>
+            Replacement implementation for BOOSE <c>array</c> declarations supporting 1D and 2D
+            arrays of integers or real numbers.
+            </summary>
+            <remarks>
+            Parses declarations such as:
+            <code>
+            array int myArr 10
+            array real myArr 10,20
+            array myArr 10,20   (defaults to int)
+            </code>
+            Allocations occur during <see cref="M:BOOSEInterpreter.Core.Replace.AppArray.Compile"/>. The class exposes methods to set and
+            retrieve cell values with bounds checking and performs type-specific storage in
+            separate backing arrays.
+            </remarks>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppArray.ElementType">
+            <summary>
+            Gets the declared element type for this array (<c>int</c> or <c>real</c>).
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppArray.Rows">
+            <summary>
+            Gets the number of rows allocated for this array (first dimension).
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppArray.Cols">
+            <summary>
+            Gets the number of columns allocated for this array (second dimension).
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppArray.Compile">
+            <summary>
+            Parses the textual declaration in <see cref="!:ParameterList"/>, establishes the
+            element type and dimensions, allocates the underlying storage and registers the
+            variable with the program's variable table.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the declaration is invalid or when
+            no <see cref="T:BOOSEInterpreter.Program"/> is associated with this command.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppArray.Execute">
+            <summary>
+            No runtime action is required for an array declaration; allocation and
+            registration are handled in <see cref="M:BOOSEInterpreter.Core.Replace.AppArray.Compile"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppArray.SetCell(System.Int32,System.Int32,System.String)">
+            <summary>
+            Evaluates <paramref name="valueExpression"/> in the current program context and
+            assigns the resulting value to the specified cell.
+            </summary>
+            <param name="row">Zero-based row index.</param>
+            <param name="col">Zero-based column index.</param>
+            <param name="valueExpression">Expression to evaluate for the cell value.</param>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not associated with
+            a <see cref="T:BOOSEInterpreter.Program"/>, when indices are out of range, or when the backing store
+            for the declared element type is not allocated.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppArray.GetCell(System.Int32,System.Int32)">
+            <summary>
+            Retrieves the contents of the specified cell as a string. Real values are formatted
+            using invariant culture.
+            </summary>
+            <param name="row">Zero-based row index.</param>
+            <param name="col">Zero-based column index.</param>
+            <returns>The cell value formatted as a string.</returns>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not associated with
+            a <see cref="T:BOOSEInterpreter.Program"/>, when indices are invalid, or when the backing store is
+            not allocated.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppArray.ValidateIndex(System.Int32,System.Int32)">
+            <summary>
+            Validates that the given indices are within the allocated array bounds and throws
+            a <see cref="T:BOOSE.CommandException"/> when they are not.
+            </summary>
+            <param name="row">Zero-based row index.</param>
+            <param name="col">Zero-based column index.</param>
+            <exception cref="T:BOOSE.CommandException">Thrown when either index is out of range.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppBoolean">
+            <summary>
+            Unrestricted boolean variable implementation.
+            </summary>
+            <remarks>
+            Stores a boolean value and integrates with the program's variable table. The
+            declaration may optionally provide an initialiser expression (e.g. "boolean x = true").
+            The evaluation and storage keep <see cref="P:BOOSEInterpreter.Core.Replace.AppBoolean.BoolValue"/> and the base
+            <see cref="P:BOOSE.Evaluation.Value"/> int representation in sync.
+            </remarks>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppBoolean.BoolValue">
+            <summary>
+            The boolean value represented by this variable.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppBoolean.Compile">
+            <summary>
+            Parses the declaration from <see cref="!:ParameterList"/>, extracting the variable name
+            and optional initialiser expression. Registers the variable with the program if it
+            does not already exist.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when no program is associated or when the
+            declaration is missing a variable name.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppBoolean.Execute">
+            <summary>
+            Evaluates the boolean expression, updates <see cref="P:BOOSEInterpreter.Core.Replace.AppBoolean.BoolValue"/> and the base
+            integer <see cref="P:BOOSE.Evaluation.Value"/>, and stores or updates the variable in the
+            program's variable table.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not associated with a
+            <see cref="T:BOOSEInterpreter.Program"/>.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppCall">
+             <summary>
+             Replace implementation of the BOOSE <c>call</c> command.
+            
+             The BOOSE library's <see cref="T:BOOSE.Call"/> ties into the restricted
+             <see cref="T:BOOSE.Method"/> class. This rewritten version works with
+             <see cref="T:BOOSEInterpreter.Core.Replace.AppMethod"/> and allows multiple methods/calls.
+             </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppCall.CheckParameters(System.String[])">
+            <summary>
+            Validates that at least one parameter (the method name) is provided.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppCall.Compile">
+            <summary>
+            Parses the parameter list extracting the target method name and the list of
+            argument expressions. Argument evaluation is deferred until <see cref="M:BOOSEInterpreter.Core.Replace.AppCall.Execute"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppCall.Execute">
+            <summary>
+            Executes a method call by resolving the target <see cref="T:BOOSEInterpreter.Core.Replace.AppMethod"/>, creating
+            and initialising local parameter variables, ensuring the return variable exists,
+            pushing a call frame and jumping into the method body.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not attached to a
+            <see cref="T:BOOSEInterpreter.Program"/>, when the method cannot be found, when the argument count
+            does not match, or when an unsupported parameter type is encountered.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppElse">
+            <summary>
+            Replacement implementation for BOOSE <c>else</c> which pairs with an earlier
+            <c>if</c> compound command.
+            </summary>
+            <remarks>
+            During compilation the corresponding <c>if</c> command is popped from the program
+            stack and its end-line is set so that control flow can locate the else branch. At
+            runtime reaching an <c>else</c> means the <c>if</c> branch executed, so the runtime
+            should skip the else body and continue after the matching <c>end</c>.
+            </remarks>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppElse.Compile">
+            <summary>
+            Performs compile-time pairing with the matching <c>if</c> command and registers
+            this <c>else</c> on the program stack so that the matching <c>end</c> pairs
+            correctly.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when not associated with a program or when
+            there is no matching <c>if</c> on the stack.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppElse.Execute">
+            <summary>
+            At runtime, skip the else body since execution reached else only when the if
+            branch was executed. The program counter is set to the command after the
+            matching <c>end</c>.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppEnd">
+            <summary>
+            Replacement implementation for BOOSE <c>end</c> which closes compound blocks such as:
+            <list type="bullet">
+            <item><c>end if</c></item>
+            <item><c>end while</c></item>
+            <item><c>end for</c></item>
+            <item><c>end method</c></item>
+            </list>
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppEnd.Compile">
+            <summary>
+            Performs compile-time validation that the <c>end</c> matches a previously opened
+            compound block and records pairing information for runtime control flow.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when no matching opening block exists or
+            when the types do not match (for example, <c>end for</c> without a preceding
+            <c>for</c>).</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppEnd.Execute">
+            <summary>
+            Executes the end command by performing the appropriate control-flow action based
+            on the paired opening block. Actions include: returning from methods, looping back
+            for <c>while</c> and <c>for</c>, and cleaning up local variables for methods.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppFor">
+            <summary>
+            Replacement implementation for BOOSE <c>for</c> loops supporting common syntax
+            variations such as <c>for i=1 to 10 step 1</c> and comma-separated forms.
+            </summary>
+            <remarks>
+            The command lazily evaluates bounds on first execution (allowing dependencies on
+            other variables) and uses an internal <c>Advance</c> helper for iteration logic which
+            is called by the corresponding <c>end for</c> implementation.
+            </remarks>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppFor.LcvName">
+            <summary>
+            The loop control variable name.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppFor.Current">
+            <summary>
+            The current integer value of the loop control variable.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppFor.To">
+            <summary>
+            The evaluated loop upper bound.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppFor.Step">
+            <summary>
+            The evaluated step increment used when advancing the loop.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppFor.Compile">
+            <summary>
+            Parses the for loop signature and pushes this command onto the program stack
+            so that the matching <c>end for</c> can pair with it.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when not associated with a program or
+            when the signature is missing/invalid.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppFor.Execute">
+            <summary>
+            Evaluates loop bounds and initialises or updates the loop control variable. If the
+            loop condition is not met, the program counter is advanced to the command after
+            the matching <c>end for</c>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppFor.Advance(BOOSE.StoredProgram)">
+            <summary>
+            Advances the loop by one step. This method is intended to be called by the
+            <c>end for</c> implementation and updates the loop control variable accordingly.
+            </summary>
+            <param name="program">The program instance used to add/update the loop control variable.</param>
+            <returns><c>true</c> if the loop should continue after the advance; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppFor.ParseSignature(System.String)">
+            <summary>
+            Parses the for-loop signature which may be in comma-separated form
+            (<c>i,1,10,1</c>) or in keyword form (<c>i=1 to 10 step 1</c>).
+            </summary>
+            <param name="sig">The raw signature text from the command.</param>
+            <exception cref="T:BOOSE.CommandException">Thrown when the signature is empty or invalid.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppIf">
+            <summary>
+            Replacement implementation for BOOSE <c>if</c> that evaluates a conditional
+            expression and controls flow into the true or false branch.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppIf.Compile">
+            <summary>
+            Compiles the <c>if</c> command by recording its line number, storing the
+            conditional expression from <see cref="!:ParameterList"/>, setting the command
+            type and pushing the command to the program stack for later pairing with
+            an <c>else</c> or <c>end</c>.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not associated with a program.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppIf.Execute">
+            <summary>
+            Evaluates the condition at runtime and, if the condition is false, advances the
+            program counter to the first command of the false branch (either after the
+            <c>else</c> line or after the matching <c>end</c> when no else exists).
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppInt">
+            <summary>
+            Unrestricted integer variable command used to declare and manage integer variables
+            within a <see cref="T:BOOSE.StoredProgram"/>.
+            </summary>
+            <remarks>
+            Supports declaring multiple variables in a single statement (comma-separated) and
+            optional initialisers. Initialiser expressions are not evaluated at compile time to
+            allow method parameter dependencies; evaluation occurs during <see cref="M:BOOSEInterpreter.Core.Replace.AppInt.Execute"/>.
+            </remarks>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.#ctor">
+            <summary>
+            Default constructor for an uninitialised integer variable declaration.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.#ctor(System.String,System.Int32)">
+            <summary>
+            Creates an <see cref="T:BOOSEInterpreter.Core.Replace.AppInt"/> with the specified name and initial integer value.
+            </summary>
+            <param name="name">Variable name.</param>
+            <param name="initialValue">Initial integer value.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.#ctor(System.String,System.String)">
+            <summary>
+            Creates an <see cref="T:BOOSEInterpreter.Core.Replace.AppInt"/> with the specified name and an initialiser
+            expression provided as text (parsed with <see cref="M:BOOSEInterpreter.Core.Replace.AppInt.ParseToInt(System.String)"/>).
+            </summary>
+            <param name="name">Variable name.</param>
+            <param name="initialValue">Initial value text.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.Compile">
+            <summary>
+            Parses the declaration(s) from <see cref="!:ParameterList"/>, records the primary
+            variable and any additional comma-separated declarations and registers the
+            variable with the program if necessary.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.Execute">
+            <summary>
+            Ensures any extra variables declared alongside the primary variable exist, evaluates
+            the initializer expression and stores the resulting integer value in the program's
+            variable table.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.ParseAndDeclare(System.String)">
+            <summary>
+            Parses the textual declaration which may either be a single assignment
+            (<c>name=expr</c>) or a comma-separated list of names. Populates the primary
+            variable, optional expression and any extra declarations.
+            </summary>
+            <param name="text">Declaration text.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.ParseToInt(System.String)">
+            <summary>
+            Parses a textual value into an integer. Floating values are rounded to the nearest
+            integer and non-numeric input yields zero.
+            </summary>
+            <param name="raw">The input text to parse.</param>
+            <returns>The parsed integer value.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppInt.NormaliseName(System.String)">
+            <summary>
+            Normalises a variable declaration token by returning the last whitespace-separated
+            token (allowing forms such as "int x").
+            </summary>
+            <param name="raw">Raw token text.</param>
+            <returns>Normalised variable name or empty string if input invalid.</returns>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppMethod">
+            <summary>
+            Unrestricted implementation of the BOOSE <c>method</c> declaration.
+            
+            The BOOSE library's <see cref="T:BOOSE.Method"/> class enforces restrictions (e.g., only a
+            single method). This class rewrites the behaviour so that multiple methods are allowed.
+            
+            Syntax example:
+            <code>
+            method int mulMethod int one, int two
+              mulMethod = one * two
+            end method
+            </code>
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppMethod.ReturnType">
+            <summary>
+            Gets the return type as declared (e.g. <c>int</c>, <c>real</c>).
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppMethod.MethodName">
+            <summary>
+            Gets the method name.
+            </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppMethod.MethodParameters">
+            <summary>
+            Gets the ordered list of method parameters.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppMethod.CheckParameters(System.String[])">
+            <summary>
+            BOOSE base method does not validate beyond compile-time parsing.
+            This override intentionally performs no additional checks.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppMethod.Compile">
+            <summary>
+            Parses the method signature (return type, name and parameters) and registers
+            the declaration in the program so that <c>call</c> can locate it.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the declaration is missing or
+            malformed, or when no program is associated with this command.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppMethod.Execute">
+            <summary>
+            Registers the method declaration in the runtime <see cref="T:BOOSEInterpreter.Core.Replace.MethodRegistry"/>
+            and skips execution of the method body at top-level program execution. The
+            method body is entered only when a corresponding <c>call</c> command is executed.
+            </summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppPeek">
+            <summary>
+            Unrestricted replacement for BOOSE <c>peek</c> which reads a value from an array into
+            a program variable.
+            </summary>
+            <remarks>
+            The command accepts several syntaxes such as <c>y = prices 5</c> or
+            <c>y,prices,5</c>. Numeric conversions are handled to create or update the target
+            variable with the appropriate numeric type (int or real) based on the array element
+            type.
+            </remarks>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPeek.CheckParameters(System.String[])">
+            <summary>
+            Lightweight parameter validation; detailed parsing is performed in <see cref="M:BOOSEInterpreter.Core.Replace.AppPeek.Parse(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPeek.Compile">
+            <summary>
+            Parses and validates the parameter list for the peek command.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPeek.Execute">
+            <summary>
+            Executes the peek operation by reading a value from the named array at the
+            evaluated indices and creating or updating the target variable in the program.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when not attached to a program or when the
+            named array does not exist or is not an array.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPeek.Parse(System.String)">
+            <summary>
+            Parses the textual parameter list supporting forms with '=' or comma/space separated
+            tokens and extracts the target variable, array name and index expressions.
+            </summary>
+            <param name="paramList">Raw parameter text from the command.</param>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppPoke">
+            <summary>
+            Unrestricted replacement for BOOSE <c>poke</c> which writes a value into an array
+            element by evaluating a supplied expression.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPoke.CheckParameters(System.String[])">
+            <summary>
+            Minimal parameter validation; full parsing and validation occur in <see cref="M:BOOSEInterpreter.Core.Replace.AppPoke.Parse(System.String)"/>.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPoke.Compile">
+            <summary>
+            Parses the parameter list to determine the target array, indices and value expression.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPoke.Execute">
+            <summary>
+            Executes the poke operation by evaluating the row/column expressions and delegating
+            to <see cref="M:BOOSEInterpreter.Core.Replace.AppArray.SetCell(System.Int32,System.Int32,System.String)"/> which handles type-specific storage.
+            </summary>
+            <exception cref="T:BOOSE.CommandException">Thrown when the command is not associated with a program
+            or when the named array is not found.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppPoke.Parse(System.String)">
+            <summary>
+            Parses the textual parameters supporting forms like
+            <c>prices 5 = 99.99</c>, <c>prices,5,99.99</c> or <c>arr 2 3 = 99</c> and extracts
+            the array name, row/col expressions and the value expression.
+            </summary>
+            <param name="paramList">Raw parameter text.</param>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppReal">
+             <summary>
+             Unrestricted real-number variable command.
+            
+             Note: BOOSE's built-in <see cref="T:BOOSE.Real"/> is sealed. This class aims to be
+             API-compatible enough for the coursework, while remaining simple.
+             </summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.AppReal.Value">
+            <summary>
+            Real value (hides <see cref="P:BOOSE.Evaluation.Value"/> which is an int).
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.#ctor(System.String,System.Double)">
+            <summary>
+            Constructs an <see cref="T:BOOSEInterpreter.Core.Replace.AppReal"/> with a name and initial double value.
+            </summary>
+            <param name="name">Variable name.</param>
+            <param name="initialValue">Initial real value.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.#ctor(System.String,System.String)">
+            <summary>
+            Constructs an <see cref="T:BOOSEInterpreter.Core.Replace.AppReal"/> with a textual initialiser parsed to a double.
+            </summary>
+            <param name="name">Variable name.</param>
+            <param name="initialValue">Textual initial value to parse.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.Compile">
+            <summary>
+            Parses the declaration and registers the variable with the program if necessary.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.Execute">
+            <summary>
+            Evaluates the initialiser expression (if any), updates the stored real value and
+            ensures the variable exists in the program's variable table.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.ParseAndDeclare(System.String)">
+            <summary>
+            Parses the textual declaration which may either be a single assignment
+            (<c>name=expr</c>) or a comma-separated list of names. Populates the primary
+            variable, optional expression and any extra declarations.
+            </summary>
+            <param name="text">Declaration text.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.ParseToDouble(System.String)">
+            <summary>
+            Parses textual input to a double. Integer tokens are returned as their numeric
+            value and non-numeric input returns <c>0.0</c>.
+            </summary>
+            <param name="raw">Textual input.</param>
+            <returns>Parsed double value.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppReal.NormaliseName(System.String)">
+            <summary>
+            Normalises a variable declaration token by returning the last whitespace-separated
+            token (allowing forms such as "real x").
+            </summary>
+            <param name="raw">Raw token text.</param>
+            <returns>Normalised variable name or empty string if input invalid.</returns>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.AppWhile">
+            <summary>
+            Represents an unrestricted BOOSE <c>while</c> loop command.
+            </summary>
+            <remarks>
+            During compilation, this command records the loop's start line and pushes itself
+            onto the program's compound stack so it can later be matched with a corresponding
+            <c>End</c> command.
+            At runtime, <see cref="M:BOOSEInterpreter.Core.Replace.AppWhile.Execute"/> evaluates the loop condition and advances the
+            program counter to exit the loop when the condition is false.
+            The loop condition expression is taken from <see cref="!:Command.ParameterList"/>
+            and stored in <see cref="!:CompoundCommand.Expression"/> during <see cref="M:BOOSEInterpreter.Core.Replace.AppWhile.Compile"/>.
+            </remarks>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppWhile.Compile">
+            <summary>
+            Compiles the <c>while</c> command by capturing the current line number, storing the
+            conditional expression, and pushing this command onto the program compound stack.
+            </summary>
+            <remarks>
+            This enables a matching <c>End</c> command (e.g., end-while) to resolve the loop
+            boundaries and set <see cref="!:CompoundCommand.EndLineNumber"/>.
+            </remarks>
+            <exception cref="T:BOOSE.CommandException">
+            Thrown when <see cref="!:Command.Program"/> has not been assigned.
+            </exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.AppWhile.Execute">
+            <summary>
+            Executes the <c>while</c> command by evaluating the stored conditional expression.
+            </summary>
+            <remarks>
+            Uses <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Bool(BOOSE.StoredProgram,System.String)"/> to evaluate
+            <see cref="!:CompoundCommand.Expression"/> in the current program context.
+            If the expression evaluates to <c>false</c>, execution skips the loop body by setting
+            <see cref="P:BOOSE.StoredProgram.PC"/> to <c><see cref="!:CompoundCommand.EndLineNumber"/> + 1</c>.
+            If the expression evaluates to <c>true</c>, execution continues into the loop body.
+            </remarks>
+            <exception cref="T:BOOSE.CommandException">
+            Thrown when <see cref="!:Command.Program"/> has not been assigned.
+            </exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.MethodRegistry">
+            <summary>
+            Registry that stores method declarations for unrestricted BOOSE programs.
+            </summary>
+            <remarks>
+            The original BOOSE <c>Method</c>/<c>Call</c> support is limited. This registry allows the
+            interpreter to register, retrieve and replace multiple <see cref="T:BOOSEInterpreter.Core.Replace.AppMethod"/> declarations
+            by name. It uses case-insensitive keys and exposes a singleton <see cref="P:BOOSEInterpreter.Core.Replace.MethodRegistry.Instance"/> for
+            global access during program compilation and execution.
+            </remarks>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.MethodRegistry.Instance">
+            <summary>
+            Singleton instance used by the runtime and compiler to access registered methods.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRegistry.Clear">
+            <summary>
+            Remove all registered methods from the registry.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRegistry.Register(BOOSEInterpreter.Core.Replace.AppMethod)">
+            <summary>
+            Register a method declaration. If a method with the same name already exists it is replaced.
+            </summary>
+            <param name="method">The <see cref="T:BOOSEInterpreter.Core.Replace.AppMethod"/> to register.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="method"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If the method has an empty or whitespace name.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRegistry.Get(System.String)">
+            <summary>
+            Retrieve a registered method by name.
+            </summary>
+            <param name="methodName">The name of the method to retrieve.</param>
+            <returns>The registered <see cref="T:BOOSEInterpreter.Core.Replace.AppMethod"/> instance.</returns>
+            <exception cref="T:System.InvalidOperationException">If <paramref name="methodName"/> is null/whitespace or the method is not found.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.MethodRuntime">
+            <summary>
+            Runtime helper that manages active method call frames for BOOSE programs.
+            </summary>
+            <remarks>
+            Method calls are represented by a <see cref="T:BOOSEInterpreter.Core.Replace.MethodFrame"/> that stores the return
+            program counter and the list of local variables created for the call. The runtime
+            maintains a stack of frames; callers push a frame before jumping into the method
+            body and pop the frame when the method returns.
+            </remarks>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.MethodRuntime.HasFrame">
+            <summary>
+            Gets a value indicating whether there is at least one active method frame.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRuntime.Clear">
+            <summary>
+            Clear all active call frames. This should be called when a new program run starts
+            to ensure no stale frames from a previous (failed) execution remain.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRuntime.Push(BOOSEInterpreter.Core.Replace.MethodFrame)">
+            <summary>
+            Push a new <see cref="T:BOOSEInterpreter.Core.Replace.MethodFrame"/> onto the call stack.
+            </summary>
+            <param name="frame">The frame representing the active method call.</param>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodRuntime.Pop">
+            <summary>
+            Pop the top <see cref="T:BOOSEInterpreter.Core.Replace.MethodFrame"/> from the call stack.
+            </summary>
+            <returns>The popped <see cref="T:BOOSEInterpreter.Core.Replace.MethodFrame"/>.</returns>
+            <exception cref="T:System.InvalidOperationException">If the call stack is empty.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Replace.MethodFrame">
+            <summary>
+            Represents an active method call frame.
+            </summary>
+            <remarks>
+            A frame stores the method name (for diagnostics), the return program counter
+            and the list of local variable names that need to be cleaned up when the method returns.
+            </remarks>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Replace.MethodFrame.#ctor(System.String,System.Int32,System.Collections.Generic.IReadOnlyList{System.String})">
+            <summary>
+            Create a new method frame.
+            </summary>
+            <param name="methodName">The method's name.</param>
+            <param name="returnPc">The program counter to return to after the call.</param>
+            <param name="locals">The list of local variable names introduced by the method.</param>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.MethodFrame.MethodName">
+            <summary>The name of the method.</summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.MethodFrame.ReturnPc">
+            <summary>The program counter to return to after the method completes.</summary>
+        </member>
+        <member name="P:BOOSEInterpreter.Core.Replace.MethodFrame.Locals">
+            <summary>The names of the local variables declared by the method.</summary>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Runtime.BooseEval">
+            <summary>
+            Helper methods for evaluating BOOSE expressions/parameters at runtime.
+            </summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Evaluate an expression and coerce it to an <see cref="T:System.Int32"/>.
+            </summary>
+            <param name="program">The current <see cref="T:BOOSE.StoredProgram"/> context used to resolve variables.</param>
+            <param name="expression">The expression to evaluate. May be a numeric literal, variable name or arithmetic expression.</param>
+            <returns>The expression value converted to an <see cref="T:System.Int32"/> (rounded from <see cref="T:System.Double"/> when necessary).</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="program"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.Double(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Evaluate an expression and coerce it to a <see cref="T:System.Double"/>.
+            </summary>
+            <param name="program">The current <see cref="T:BOOSE.StoredProgram"/> used to resolve variables.</param>
+            <param name="expression">The expression to evaluate. May include numeric literals, variables and arithmetic operators.</param>
+            <returns>The evaluated <see cref="T:System.Double"/> value.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="program"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser">
+            <summary>
+            Lightweight recursive-descent parser for arithmetic expressions producing <see cref="T:System.Double"/> values.
+            </summary>
+            <remarks>
+            This parser understands +, -, *, /, parentheses, numeric literals and variable identifiers.
+            Identifiers are resolved via <see cref="M:BOOSE.StoredProgram.GetVariable(System.String)"/>; <see cref="!:AppReal"/>
+            variables return their double value while other variables provide an integer value.
+            </remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.ParseExpression" -->
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.ParseTerm">
+            <summary>
+            Parse a term (handles multiplication and division).
+            </summary>
+            <returns>The evaluated term as a <see cref="T:System.Double"/>.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.ParseFactor">
+            <summary>
+            Parse a factor: unary +/- operators, parenthesised expressions, numeric literals or identifiers.
+            </summary>
+            <returns>The evaluated factor as a <see cref="T:System.Double"/>.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.ReadIdentifier">
+            <summary>
+            Read a C-style identifier from the current parse position (letters, digits and underscore, starting with letter or underscore).
+            </summary>
+            <returns>The identifier text or an empty string if none found.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.SkipWs">
+            <summary>Advance the parser position past any whitespace.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.Match(System.Char)">
+            <summary>Attempt to match the next character; advance on success.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleDoubleParser.Remaining">
+            <summary>Return the remaining unparsed text (trimmed) for error messages.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.Bool(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Evaluate an expression and coerce it to a <see cref="T:System.Boolean"/>.
+            </summary>
+            <param name="program">The current <see cref="T:BOOSE.StoredProgram"/> context used to resolve variables.</param>
+            <param name="expression">The boolean expression to evaluate. May include comparisons and logical operators.</param>
+            <returns>The evaluated boolean value.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="program"/> is <c>null</c>.</exception>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser" -->
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseBool">
+            <summary>
+            Parse and evaluate a complete boolean expression.
+            </summary>
+            <returns>The evaluated boolean result.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseOr">
+            <summary>Parse an OR-expression (left-associative).</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseAnd">
+            <summary>Parse an AND-expression (left-associative).</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseNot">
+            <summary>Parse a NOT-expression or a comparison/variable/parenthesised boolean.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseNumberExpr">
+            <summary>Parse a numeric expression used for comparisons within boolean expressions.</summary>
+            <returns>The evaluated numeric value as a <see cref="T:System.Double"/>.</returns>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseTerm">
+            <summary>Parse a numeric term (handles * and /).</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ParseFactor">
+            <summary>Parse a numeric factor used by the boolean numeric parser.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.SkipWs">
+            <summary>Advance the parser position past any whitespace.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.Match(System.String)">
+            <summary>Attempt to match the specified token at the current position, advancing on success.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.MatchWord(System.String)">
+            <summary>Match a whole word (ensures the token is not followed by identifier characters).</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.TryReadNumber(System.Double@)">
+            <summary>Try to read a floating-point number token at the current position.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.ReadIdentifier">
+            <summary>Read an identifier (variable name) from the current position.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.SimpleBoolParser.Remaining">
+            <summary>Return the remaining unparsed text (trimmed) for error messages.</summary>
+        </member>
+        <member name="M:BOOSEInterpreter.Core.Runtime.BooseEval.String(BOOSE.StoredProgram,System.String)">
+            <summary>
+            Evaluate an expression that may include string literals and coerce it to a <see cref="T:System.String"/>.
+            </summary>
+            <param name="program">The current <see cref="T:BOOSE.StoredProgram"/> used to resolve variables.</param>
+            <param name="expression">The expression to evaluate. May be a quoted string, numeric expression or an expression that the program evaluates to a string.</param>
+            <returns>The evaluated string value. Numeric results are formatted consistently using the invariant culture.</returns>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="program"/> is <c>null</c>.</exception>
         </member>
         <member name="T:BOOSEInterpreter.Form1">
             <summary>
@@ -456,10 +1345,15 @@
             </summary>
             <param name="message">Message to output.</param>
         </member>
-        <member name="M:BOOSEInterpreter.Form1.runButton_Click(System.Object,System.EventArgs)">
+        <member name="M:BOOSEInterpreter.Form1.ResetBooseStaticRestrictionCounters">
             <summary>
-            Executes the multiline BOOSE code written in the input box.
-            Clears the text box after successful execution but preserves the code for saving.
+            BOOSE.dll implements coursework restrictions using <b>static counters</b> inside several
+            BOOSE classes (e.g., BOOSE.Boolean/Int/Real). Those counters persist for the lifetime of
+            the application process, so running multiple example programs without closing the app
+            can incorrectly accumulate counts and trigger "Variable limit reached" errors.
+            
+            We reset those counters on each run so each program starts from a clean restriction state.
+            This mirrors what happens naturally when you close and reopen the application.
             </summary>
         </member>
         <member name="M:BOOSEInterpreter.Form1.textBox1_TextChanged(System.Object,System.EventArgs)">
