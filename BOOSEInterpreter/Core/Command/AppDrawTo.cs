@@ -1,10 +1,8 @@
 ﻿using BOOSE;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
 {
-#pragma warning disable CS1574 // XML comment has cref attribute that could not be resolved
     /// <summary>
     /// Command that draws a straight line from the current pen position to the specified
     /// coordinates. The command expects two parameters (X and Y) which are evaluated in the
@@ -19,27 +17,26 @@ namespace BOOSEInterpreter.Core.Command
     /// program or when parameters are missing or invalid.
     /// </remarks>
     public class AppDrawTo : CommandTwoParameters
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
+        private readonly ICanvas _canvas;
         /// <summary>
         /// The canvas that will be used to render the line.
         /// </summary>
-        private readonly PanelCanvas _canvas;
-
+        public AppDrawTo(ICanvas c) => _canvas = c;
         /// <summary>
         /// Initializes a new instance of the <see cref="AppDrawTo"/> class.
         /// </summary>
         /// <param name="c">The <see cref="PanelCanvas"/> the command will draw onto. Must not be <c>null</c>.</param>
-        public AppDrawTo(PanelCanvas c) => _canvas = c;
 
-        /// <summary>
-        /// Executes the command by validating and parsing the two required parameters, evaluating
-        /// them to integer coordinates, and invoking <see cref="PanelCanvas.DrawTo(int,int)"/>.
-        /// </summary>
-        /// <exception cref="CommandException">Thrown when the command lacks a program, when the
-        /// parameter list is empty, or when the wrong number of parameters is provided.</exception>
         public override void Execute()
         {
+            /// <summary>
+            /// Executes the command by validating and parsing the two required parameters, evaluating
+            /// them to integer coordinates, and invoking <see cref="PanelCanvas.DrawTo(int,int)"/>.
+            /// </summary>
+            /// <exception cref="CommandException">Thrown when the command lacks a program, when the
+            /// parameter list is empty, or when the wrong number of parameters is provided.</exception>
+
             if (Program == null)
                 throw new CommandException("DrawTo has not been initialised with a StoredProgram.");
 
@@ -60,5 +57,4 @@ namespace BOOSEInterpreter.Core.Command
             _canvas.DrawTo(x, y);
         }
     }
-
 }

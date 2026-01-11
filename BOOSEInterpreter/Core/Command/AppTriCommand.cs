@@ -1,6 +1,4 @@
 ﻿using BOOSE;
-using System;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
@@ -18,16 +16,16 @@ namespace BOOSEInterpreter.Core.Command
     /// or parameter parsing result in a <see cref="CommandException"/>.
     /// </remarks>
     public class AppTriCommand : CommandTwoParameters
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
-    private readonly PanelCanvas _canvas;
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AppTriCommand"/> class.
-    /// </summary>
-    /// <param name="c">The <see cref="PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
-    public AppTriCommand(PanelCanvas c) => _canvas = c;
+        private readonly ICanvas _canvas;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppTriCommand"/> class.
+        /// </summary>
+        /// <param name="c">The <see cref="PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
+        public AppTriCommand(ICanvas c) => _canvas = c;
         /// <summary>
         /// Executes the command by validating, parsing and evaluating the width and height
         /// parameters and invoking <see cref="PanelCanvas.Tri(int,int)"/> to draw the

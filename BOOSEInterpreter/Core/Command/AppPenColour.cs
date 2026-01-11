@@ -1,6 +1,4 @@
 ﻿using BOOSE;
-using System;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
@@ -18,20 +16,19 @@ namespace BOOSEInterpreter.Core.Command
     /// <see cref="CommandException"/> when not initialised with a program or when parameters
     /// are missing or incorrectly formed.
     /// </remarks>
+
     public class AppPenColour : CommandThreeParameters
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
         /// <summary>
         /// The target canvas whose pen colour will be modified.
         /// </summary>
-        private readonly PanelCanvas _canvas;
-
+        private readonly ICanvas _canvas;
         /// <summary>
         /// Initializes a new instance of the <see cref="AppPenColour"/> command.
         /// </summary>
         /// <param name="c">The <see cref="PanelCanvas"/> to update. Must not be <c>null</c>.</param>
-        public AppPenColour(PanelCanvas c) => _canvas = c;
 
+        public AppPenColour(ICanvas c) => _canvas = c;
         /// <summary>
         /// Executes the command by parsing three color components (R, G, B) from the
         /// <see cref="ParameterList"/>, evaluating them to integers and calling
@@ -39,6 +36,7 @@ namespace BOOSEInterpreter.Core.Command
         /// </summary>
         /// <exception cref="CommandException">Thrown when the command has no program, when the
         /// parameter list is empty or not exactly three values.</exception>
+
         public override void Execute()
         {
             if (Program == null)

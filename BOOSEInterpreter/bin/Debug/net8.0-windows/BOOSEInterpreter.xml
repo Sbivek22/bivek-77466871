@@ -226,46 +226,12 @@
             <summary>
             Factory that creates application-specific command implementations for the BOOSE interpreter.
             </summary>
-            <remarks>
-            <see cref="T:BOOSEInterpreter.Core.AppCommandFactory"/> extends the base <see cref="T:BOOSE.CommandFactory"/> and returns
-            command implementations that integrate with the application's <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> where
-            drawing or canvas access is required. For language constructs that have unrestricted
-            replacements (e.g. <c>int</c>, <c>real</c>, <c>array</c>, control-flow commands), the factory
-            returns the corresponding <c>App*</c> replacement implementations. If a command name is not
-            recognised the factory falls back to the base implementation by calling <see cref="M:BOOSE.CommandFactory.MakeCommand(System.String)"/>.
-            </remarks>
-        </member>
-        <member name="F:BOOSEInterpreter.Core.AppCommandFactory.canvas">
-            <summary>
-            The canvas instance that created commands will use for rendering.
-            </summary>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.AppCommandFactory.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
-            <summary>
-            Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.AppCommandFactory"/> class.
-            </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> that commands should draw to.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.AppCommandFactory.MakeCommand(System.String)">
-            <summary>
-            Create an <see cref="T:BOOSE.ICommand"/> instance for the provided command <paramref name="name"/>.
-            </summary>
-            <param name="name">The command name to create (case-insensitive).</param>
-            <returns>An <see cref="T:BOOSE.ICommand"/> instance that implements the requested command. If the
-            command name is not handled by this factory the method delegates to <see cref="M:BOOSE.CommandFactory.MakeCommand(System.String)"/>.</returns>
-            <remarks>
-            The factory maps a set of known command names to their application-specific implementations.
-            Drawing-related commands receive the <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance supplied to the
-            factory constructor. Control-flow and replacement commands (such as <c>int</c>, <c>real</c>,
-            <c>array</c>, <c>if</c>, <c>for</c>, <c>while</c>, <c>end</c>, <c>method</c>, <c>call</c>) are
-            provided as unrestricted replacements by returning the corresponding <c>App*</c> types.
-            </remarks>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppCircle">
             <summary>
             Command that draws a circle on the application canvas. The command evaluates a single
             parameter expression (typically an integer radius) and instructs the provided
-            <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance to draw an unfilled circle at the current pen
+            <see cref="!:PanelCanvas"/> instance to draw an unfilled circle at the current pen
             position.
             </summary>
             <remarks>
@@ -282,10 +248,10 @@
             The canvas instance used to render the circle.
             </summary>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppCircle.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppCircle"/> class using the
-            specified <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> for rendering.
+            specified <see cref="!:PanelCanvas"/> for rendering.
             </summary>
             <param name="c">The canvas that will receive the circle drawing commands. Must not be <c>null</c>.</param>
         </member>
@@ -297,7 +263,7 @@
               parameter is present.
             - Evaluates the expression to an integer radius using
               <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/>.
-            - Calls <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)"/> with the computed radius and
+            - Calls <see cref="!:PanelCanvas.Circle(int,bool)"/> with the computed radius and
               <c>false</c> for the filled flag (draw outline only).
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command has no associated program or when
@@ -318,24 +284,16 @@
             program or when parameters are missing or invalid.
             </remarks>
         </member>
-        <member name="F:BOOSEInterpreter.Core.Command.AppDrawTo._canvas">
+        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.#ctor(BOOSE.ICanvas)">
             <summary>
             The canvas that will be used to render the line.
             </summary>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.Execute">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppDrawTo"/> class.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> the command will draw onto. Must not be <c>null</c>.</param>
-        </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppDrawTo.Execute">
-            <summary>
-            Executes the command by validating and parsing the two required parameters, evaluating
-            them to integer coordinates, and invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)"/>.
-            </summary>
-            <exception cref="T:BOOSE.CommandException">Thrown when the command lacks a program, when the
-            parameter list is empty, or when the wrong number of parameters is provided.</exception>
+            <param name="c">The <see cref="!:PanelCanvas"/> the command will draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="T:BOOSEInterpreter.Core.Command.AppMoveTo">
             <summary>
@@ -355,16 +313,16 @@
             The canvas whose current pen position will be modified.
             </summary>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new <see cref="T:BOOSEInterpreter.Core.Command.AppMoveTo"/> instance that operates on the provided canvas.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to update. Must not be <c>null</c>.</param>
+            <param name="c">The <see cref="!:PanelCanvas"/> to update. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppMoveTo.Execute">
             <summary>
             Executes the move operation: validates parameters, evaluates them to integers and
-            calls <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)"/> to set the new pen position.
+            calls <see cref="!:PanelCanvas.MoveTo(int,int)"/> to set the new pen position.
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command has no program or when
             parameters are missing or not exactly two in number.</exception>
@@ -378,7 +336,7 @@
             <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> inherits from <see cref="T:BOOSE.CommandThreeParameters"/>, which
             provides the <see cref="!:ParameterList"/> textual data. Parameters are evaluated using
             <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.Int(BOOSE.StoredProgram,System.String)"/> and applied to the canvas via
-            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>. The command will throw a
+            <see cref="!:PanelCanvas.SetColour(int,int,int)"/>. The command will throw a
             <see cref="T:BOOSE.CommandException"/> when not initialised with a program or when parameters
             are missing or incorrectly formed.
             </remarks>
@@ -388,17 +346,17 @@
             The target canvas whose pen colour will be modified.
             </summary>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppPenColour"/> command.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to update. Must not be <c>null</c>.</param>
+            <param name="c">The <see cref="!:PanelCanvas"/> to update. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppPenColour.Execute">
             <summary>
             Executes the command by parsing three color components (R, G, B) from the
             <see cref="!:ParameterList"/>, evaluating them to integers and calling
-            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)"/>.
+            <see cref="!:PanelCanvas.SetColour(int,int,int)"/>.
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command has no program, when the
             parameter list is empty or not exactly three values.</exception>
@@ -416,16 +374,16 @@
             parameters are missing or invalid.
             </remarks>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppRect.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppRect.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppRect"/> command.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
+            <param name="c">The <see cref="!:PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppRect.Execute">
             <summary>
             Executes the command by parsing and evaluating the width and height parameters and
-            invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)"/> with the evaluated values
+            invoking <see cref="!:PanelCanvas.Rect(int,int,bool)"/> with the evaluated values
             and <c>false</c> to indicate an outline-only rectangle.
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command lacks a program or when
@@ -444,16 +402,16 @@
             or parameter parsing result in a <see cref="T:BOOSE.CommandException"/>.
             </remarks>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppTriCommand"/> class.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
+            <param name="c">The <see cref="!:PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppTriCommand.Execute">
             <summary>
             Executes the command by validating, parsing and evaluating the width and height
-            parameters and invoking <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)"/> to draw the
+            parameters and invoking <see cref="!:PanelCanvas.Tri(int,int)"/> to draw the
             triangle.
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command has no program or when
@@ -462,12 +420,12 @@
         <member name="T:BOOSEInterpreter.Core.Command.AppWrite">
             <summary>
             Application-specific implementation of the <see cref="T:BOOSE.Write"/> command that renders
-            evaluated text to a <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> instance.
+            evaluated text to a <see cref="!:PanelCanvas"/> instance.
             </summary>
             <remarks>
             <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> evaluates the textual expression contained in
             <see cref="!:ParameterList"/> in the context of the associated <see cref="T:BOOSEInterpreter.Program"/>
-            and writes the resulting string to the canvas using <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)"/>.
+            and writes the resulting string to the canvas using <see cref="!:PanelCanvas.WriteText(string)"/>.
             If the expression refers to a boolean variable stored in the program, the command
             writes "true" or "false" instead of the variable object's textual form.
             </remarks>
@@ -477,11 +435,11 @@
             The canvas used to render text for this command.
             </summary>
         </member>
-        <member name="M:BOOSEInterpreter.Core.Command.AppWrite.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)">
+        <member name="M:BOOSEInterpreter.Core.Command.AppWrite.#ctor(BOOSE.ICanvas)">
             <summary>
             Initializes a new instance of the <see cref="T:BOOSEInterpreter.Core.Command.AppWrite"/> class with the provided canvas.
             </summary>
-            <param name="c">The <see cref="T:BOOSEInterpreter.Canvas.PanelCanvas"/> used to draw the output text. Must not be <c>null</c>.</param>
+            <param name="c">The <see cref="!:PanelCanvas"/> used to draw the output text. Must not be <c>null</c>.</param>
         </member>
         <member name="M:BOOSEInterpreter.Core.Command.AppWrite.Execute">
             <summary>
@@ -490,7 +448,7 @@
             and evaluates it to a string using <see cref="M:BOOSEInterpreter.Core.Runtime.BooseEval.String(BOOSE.StoredProgram,System.String)"/>.
             If the expression names a boolean variable in the program, the boolean value is
             printed as "true"/"false". The resulting text is written to the canvas via
-            <see cref="M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)"/>.
+            <see cref="!:PanelCanvas.WriteText(string)"/>.
             </summary>
             <exception cref="T:BOOSE.CommandException">Thrown when the command has not been initialised
             with a <see cref="T:BOOSEInterpreter.Program"/>.</exception>

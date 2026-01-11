@@ -1,0 +1,1448 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter.Canvas.PanelCanvas
+  commentId: T:BOOSEInterpreter.Canvas.PanelCanvas
+  id: PanelCanvas
+  parent: BOOSEInterpreter.Canvas
+  children:
+  - BOOSEInterpreter.Canvas.PanelCanvas.#ctor(System.Windows.Forms.PictureBox)
+  - BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)
+  - BOOSEInterpreter.Canvas.PanelCanvas.Clear
+  - BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)
+  - BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)
+  - BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+  - BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  - BOOSEInterpreter.Canvas.PanelCanvas.Reset
+  - BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)
+  - BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  - BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)
+  - BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)
+  - BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+  - BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+  - BOOSEInterpreter.Canvas.PanelCanvas.getBitmap
+  langs:
+  - csharp
+  - vb
+  name: PanelCanvas
+  nameWithType: PanelCanvas
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas
+  type: Class
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: PanelCanvas
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 7
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  syntax:
+    content: 'public class PanelCanvas : ICanvas'
+    content.vb: Public Class PanelCanvas Implements ICanvas
+  inheritance:
+  - System.Object
+  implements:
+  - BOOSE.ICanvas
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+  commentId: P:BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+  id: Xpos
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Xpos
+  nameWithType: PanelCanvas.Xpos
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+  type: Property
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Xpos
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 12
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public int Xpos { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Xpos As Integer
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Xpos*
+  implements:
+  - BOOSE.ICanvas.Xpos
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+  commentId: P:BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+  id: Ypos
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Ypos
+  nameWithType: PanelCanvas.Ypos
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+  type: Property
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Ypos
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 13
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public int Ypos { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Ypos As Integer
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Ypos*
+  implements:
+  - BOOSE.ICanvas.Ypos
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+  commentId: P:BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+  id: PenColour
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: PenColour
+  nameWithType: PanelCanvas.PenColour
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+  type: Property
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: PenColour
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 14
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public object PenColour { get; set; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property PenColour As Object
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.PenColour*
+  implements:
+  - BOOSE.ICanvas.PenColour
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.#ctor(System.Windows.Forms.PictureBox)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.#ctor(System.Windows.Forms.PictureBox)
+  id: '#ctor(System.Windows.Forms.PictureBox)'
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: PanelCanvas(PictureBox)
+  nameWithType: PanelCanvas.PanelCanvas(PictureBox)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.PanelCanvas(System.Windows.Forms.PictureBox)
+  type: Constructor
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: .ctor
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 18
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  syntax:
+    content: public PanelCanvas(PictureBox box)
+    parameters:
+    - id: box
+      type: System.Windows.Forms.PictureBox
+    content.vb: Public Sub New(box As PictureBox)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.#ctor*
+  nameWithType.vb: PanelCanvas.New(PictureBox)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.New(System.Windows.Forms.PictureBox)
+  name.vb: New(PictureBox)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Set(System.Int32,System.Int32)
+  id: Set(System.Int32,System.Int32)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Set(int, int)
+  nameWithType: PanelCanvas.Set(int, int)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Set(int, int)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Set
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 30
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Set(int width, int height)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    content.vb: Public Sub [Set](width As Integer, height As Integer)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Set*
+  implements:
+  - BOOSE.ICanvas.Set(System.Int32,System.Int32)
+  nameWithType.vb: PanelCanvas.Set(Integer, Integer)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.Set(Integer, Integer)
+  name.vb: Set(Integer, Integer)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(System.Int32,System.Int32)
+  id: MoveTo(System.Int32,System.Int32)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: MoveTo(int, int)
+  nameWithType: PanelCanvas.MoveTo(int, int)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(int, int)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: MoveTo
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 38
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void MoveTo(int x, int y)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    content.vb: Public Sub MoveTo(x As Integer, y As Integer)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo*
+  implements:
+  - BOOSE.ICanvas.MoveTo(System.Int32,System.Int32)
+  nameWithType.vb: PanelCanvas.MoveTo(Integer, Integer)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo(Integer, Integer)
+  name.vb: MoveTo(Integer, Integer)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(System.Int32,System.Int32)
+  id: DrawTo(System.Int32,System.Int32)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: DrawTo(int, int)
+  nameWithType: PanelCanvas.DrawTo(int, int)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(int, int)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: DrawTo
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 44
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void DrawTo(int x, int y)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    content.vb: Public Sub DrawTo(x As Integer, y As Integer)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo*
+  implements:
+  - BOOSE.ICanvas.DrawTo(System.Int32,System.Int32)
+  nameWithType.vb: PanelCanvas.DrawTo(Integer, Integer)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo(Integer, Integer)
+  name.vb: DrawTo(Integer, Integer)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Circle(System.Int32,System.Boolean)
+  id: Circle(System.Int32,System.Boolean)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Circle(int, bool)
+  nameWithType: PanelCanvas.Circle(int, bool)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Circle(int, bool)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Circle
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 55
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Circle(int radius, bool filled)
+    parameters:
+    - id: radius
+      type: System.Int32
+    - id: filled
+      type: System.Boolean
+    content.vb: Public Sub Circle(radius As Integer, filled As Boolean)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Circle*
+  implements:
+  - BOOSE.ICanvas.Circle(System.Int32,System.Boolean)
+  nameWithType.vb: PanelCanvas.Circle(Integer, Boolean)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.Circle(Integer, Boolean)
+  name.vb: Circle(Integer, Boolean)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  id: Rect(System.Int32,System.Int32,System.Boolean)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Rect(int, int, bool)
+  nameWithType: PanelCanvas.Rect(int, int, bool)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Rect(int, int, bool)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Rect
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 67
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Rect(int width, int height, bool filled)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: filled
+      type: System.Boolean
+    content.vb: Public Sub Rect(width As Integer, height As Integer, filled As Boolean)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Rect*
+  implements:
+  - BOOSE.ICanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  nameWithType.vb: PanelCanvas.Rect(Integer, Integer, Boolean)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.Rect(Integer, Integer, Boolean)
+  name.vb: Rect(Integer, Integer, Boolean)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Tri(System.Int32,System.Int32)
+  id: Tri(System.Int32,System.Int32)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Tri(int, int)
+  nameWithType: PanelCanvas.Tri(int, int)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Tri(int, int)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Tri
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 79
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Tri(int width, int height)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    content.vb: Public Sub Tri(width As Integer, height As Integer)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Tri*
+  implements:
+  - BOOSE.ICanvas.Tri(System.Int32,System.Int32)
+  nameWithType.vb: PanelCanvas.Tri(Integer, Integer)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.Tri(Integer, Integer)
+  name.vb: Tri(Integer, Integer)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Clear
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Clear
+  id: Clear
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: PanelCanvas.Clear()
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Clear()
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Clear
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 90
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Clear*
+  implements:
+  - BOOSE.ICanvas.Clear
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Reset
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.Reset
+  id: Reset
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: Reset()
+  nameWithType: PanelCanvas.Reset()
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Reset()
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Reset
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 96
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void Reset()
+    content.vb: Public Sub Reset()
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.Reset*
+  implements:
+  - BOOSE.ICanvas.Reset
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  id: SetColour(System.Int32,System.Int32,System.Int32)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: SetColour(int, int, int)
+  nameWithType: PanelCanvas.SetColour(int, int, int)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.SetColour(int, int, int)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: SetColour
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 103
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void SetColour(int r, int g, int b)
+    parameters:
+    - id: r
+      type: System.Int32
+    - id: g
+      type: System.Int32
+    - id: b
+      type: System.Int32
+    content.vb: Public Sub SetColour(r As Integer, g As Integer, b As Integer)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.SetColour*
+  implements:
+  - BOOSE.ICanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  nameWithType.vb: PanelCanvas.SetColour(Integer, Integer, Integer)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.SetColour(Integer, Integer, Integer)
+  name.vb: SetColour(Integer, Integer, Integer)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.WriteText(System.String)
+  id: WriteText(System.String)
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: WriteText(string)
+  nameWithType: PanelCanvas.WriteText(string)
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.WriteText(string)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: WriteText
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 108
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public void WriteText(string text)
+    parameters:
+    - id: text
+      type: System.String
+    content.vb: Public Sub WriteText(text As String)
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.WriteText*
+  implements:
+  - BOOSE.ICanvas.WriteText(System.String)
+  nameWithType.vb: PanelCanvas.WriteText(String)
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.WriteText(String)
+  name.vb: WriteText(String)
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.getBitmap
+  commentId: M:BOOSEInterpreter.Canvas.PanelCanvas.getBitmap
+  id: getBitmap
+  parent: BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: getBitmap()
+  nameWithType: PanelCanvas.getBitmap()
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.getBitmap()
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Canvas/PanelCanvas.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: getBitmap
+    path: BOOSEInterpreter/Canvas/PanelCanvas.cs
+    startLine: 117
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Canvas
+  example: []
+  syntax:
+    content: public object getBitmap()
+    return:
+      type: System.Object
+    content.vb: Public Function getBitmap() As Object
+  overload: BOOSEInterpreter.Canvas.PanelCanvas.getBitmap*
+  implements:
+  - BOOSE.ICanvas.getBitmap
+references:
+- uid: BOOSEInterpreter.Canvas
+  commentId: N:BOOSEInterpreter.Canvas
+  href: BOOSEInterpreter.html
+  name: BOOSEInterpreter.Canvas
+  nameWithType: BOOSEInterpreter.Canvas
+  fullName: BOOSEInterpreter.Canvas
+  spec.csharp:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html
+  spec.vb:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: BOOSE.ICanvas
+  commentId: T:BOOSE.ICanvas
+  parent: BOOSE
+  isExternal: true
+  name: ICanvas
+  nameWithType: ICanvas
+  fullName: BOOSE.ICanvas
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: BOOSE
+  commentId: N:BOOSE
+  isExternal: true
+  name: BOOSE
+  nameWithType: BOOSE
+  fullName: BOOSE
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Xpos*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Xpos
+  name: Xpos
+  nameWithType: PanelCanvas.Xpos
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Xpos
+- uid: BOOSE.ICanvas.Xpos
+  commentId: P:BOOSE.ICanvas.Xpos
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: Xpos
+  nameWithType: ICanvas.Xpos
+  fullName: BOOSE.ICanvas.Xpos
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Ypos*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Ypos
+  name: Ypos
+  nameWithType: PanelCanvas.Ypos
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Ypos
+- uid: BOOSE.ICanvas.Ypos
+  commentId: P:BOOSE.ICanvas.Ypos
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: Ypos
+  nameWithType: ICanvas.Ypos
+  fullName: BOOSE.ICanvas.Ypos
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.PenColour*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_PenColour
+  name: PenColour
+  nameWithType: PanelCanvas.PenColour
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.PenColour
+- uid: BOOSE.ICanvas.PenColour
+  commentId: P:BOOSE.ICanvas.PenColour
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: PenColour
+  nameWithType: ICanvas.PenColour
+  fullName: BOOSE.ICanvas.PenColour
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.#ctor*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.#ctor
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas__ctor_System_Windows_Forms_PictureBox_
+  name: PanelCanvas
+  nameWithType: PanelCanvas.PanelCanvas
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.PanelCanvas
+  nameWithType.vb: PanelCanvas.New
+  fullName.vb: BOOSEInterpreter.Canvas.PanelCanvas.New
+  name.vb: New
+- uid: System.Windows.Forms.PictureBox
+  commentId: T:System.Windows.Forms.PictureBox
+  parent: System.Windows.Forms
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.forms.picturebox
+  name: PictureBox
+  nameWithType: PictureBox
+  fullName: System.Windows.Forms.PictureBox
+- uid: System.Windows.Forms
+  commentId: N:System.Windows.Forms
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Windows.Forms
+  nameWithType: System.Windows.Forms
+  fullName: System.Windows.Forms
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Forms
+    name: Forms
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.forms
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Forms
+    name: Forms
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.forms
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Set*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Set
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Set_System_Int32_System_Int32_
+  name: Set
+  nameWithType: PanelCanvas.Set
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Set
+- uid: BOOSE.ICanvas.Set(System.Int32,System.Int32)
+  commentId: M:BOOSE.ICanvas.Set(System.Int32,System.Int32)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: Set(int, int)
+  nameWithType: ICanvas.Set(int, int)
+  fullName: BOOSE.ICanvas.Set(int, int)
+  nameWithType.vb: ICanvas.Set(Integer, Integer)
+  fullName.vb: BOOSE.ICanvas.Set(Integer, Integer)
+  name.vb: Set(Integer, Integer)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Set(System.Int32,System.Int32)
+    name: Set
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Set(System.Int32,System.Int32)
+    name: Set
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.MoveTo
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_MoveTo_System_Int32_System_Int32_
+  name: MoveTo
+  nameWithType: PanelCanvas.MoveTo
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.MoveTo
+- uid: BOOSE.ICanvas.MoveTo(System.Int32,System.Int32)
+  commentId: M:BOOSE.ICanvas.MoveTo(System.Int32,System.Int32)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: MoveTo(int, int)
+  nameWithType: ICanvas.MoveTo(int, int)
+  fullName: BOOSE.ICanvas.MoveTo(int, int)
+  nameWithType.vb: ICanvas.MoveTo(Integer, Integer)
+  fullName.vb: BOOSE.ICanvas.MoveTo(Integer, Integer)
+  name.vb: MoveTo(Integer, Integer)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.MoveTo(System.Int32,System.Int32)
+    name: MoveTo
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.MoveTo(System.Int32,System.Int32)
+    name: MoveTo
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.DrawTo
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_DrawTo_System_Int32_System_Int32_
+  name: DrawTo
+  nameWithType: PanelCanvas.DrawTo
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.DrawTo
+- uid: BOOSE.ICanvas.DrawTo(System.Int32,System.Int32)
+  commentId: M:BOOSE.ICanvas.DrawTo(System.Int32,System.Int32)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: DrawTo(int, int)
+  nameWithType: ICanvas.DrawTo(int, int)
+  fullName: BOOSE.ICanvas.DrawTo(int, int)
+  nameWithType.vb: ICanvas.DrawTo(Integer, Integer)
+  fullName.vb: BOOSE.ICanvas.DrawTo(Integer, Integer)
+  name.vb: DrawTo(Integer, Integer)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.DrawTo(System.Int32,System.Int32)
+    name: DrawTo
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.DrawTo(System.Int32,System.Int32)
+    name: DrawTo
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Circle*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Circle
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Circle_System_Int32_System_Boolean_
+  name: Circle
+  nameWithType: PanelCanvas.Circle
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Circle
+- uid: BOOSE.ICanvas.Circle(System.Int32,System.Boolean)
+  commentId: M:BOOSE.ICanvas.Circle(System.Int32,System.Boolean)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: Circle(int, bool)
+  nameWithType: ICanvas.Circle(int, bool)
+  fullName: BOOSE.ICanvas.Circle(int, bool)
+  nameWithType.vb: ICanvas.Circle(Integer, Boolean)
+  fullName.vb: BOOSE.ICanvas.Circle(Integer, Boolean)
+  name.vb: Circle(Integer, Boolean)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Circle(System.Int32,System.Boolean)
+    name: Circle
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Circle(System.Int32,System.Boolean)
+    name: Circle
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Rect*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Rect
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Rect_System_Int32_System_Int32_System_Boolean_
+  name: Rect
+  nameWithType: PanelCanvas.Rect
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Rect
+- uid: BOOSE.ICanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  commentId: M:BOOSE.ICanvas.Rect(System.Int32,System.Int32,System.Boolean)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: Rect(int, int, bool)
+  nameWithType: ICanvas.Rect(int, int, bool)
+  fullName: BOOSE.ICanvas.Rect(int, int, bool)
+  nameWithType.vb: ICanvas.Rect(Integer, Integer, Boolean)
+  fullName.vb: BOOSE.ICanvas.Rect(Integer, Integer, Boolean)
+  name.vb: Rect(Integer, Integer, Boolean)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Rect(System.Int32,System.Int32,System.Boolean)
+    name: Rect
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Rect(System.Int32,System.Int32,System.Boolean)
+    name: Rect
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Tri*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Tri
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Tri_System_Int32_System_Int32_
+  name: Tri
+  nameWithType: PanelCanvas.Tri
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Tri
+- uid: BOOSE.ICanvas.Tri(System.Int32,System.Int32)
+  commentId: M:BOOSE.ICanvas.Tri(System.Int32,System.Int32)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: Tri(int, int)
+  nameWithType: ICanvas.Tri(int, int)
+  fullName: BOOSE.ICanvas.Tri(int, int)
+  nameWithType.vb: ICanvas.Tri(Integer, Integer)
+  fullName.vb: BOOSE.ICanvas.Tri(Integer, Integer)
+  name.vb: Tri(Integer, Integer)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Tri(System.Int32,System.Int32)
+    name: Tri
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Tri(System.Int32,System.Int32)
+    name: Tri
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Clear*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Clear
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Clear
+  name: Clear
+  nameWithType: PanelCanvas.Clear
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Clear
+- uid: BOOSE.ICanvas.Clear
+  commentId: M:BOOSE.ICanvas.Clear
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: Clear()
+  nameWithType: ICanvas.Clear()
+  fullName: BOOSE.ICanvas.Clear()
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Clear
+    name: Clear
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Clear
+    name: Clear
+    isExternal: true
+  - name: (
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.Reset*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.Reset
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_Reset
+  name: Reset
+  nameWithType: PanelCanvas.Reset
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.Reset
+- uid: BOOSE.ICanvas.Reset
+  commentId: M:BOOSE.ICanvas.Reset
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: Reset()
+  nameWithType: ICanvas.Reset()
+  fullName: BOOSE.ICanvas.Reset()
+  spec.csharp:
+  - uid: BOOSE.ICanvas.Reset
+    name: Reset
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.Reset
+    name: Reset
+    isExternal: true
+  - name: (
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.SetColour*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.SetColour
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_SetColour_System_Int32_System_Int32_System_Int32_
+  name: SetColour
+  nameWithType: PanelCanvas.SetColour
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.SetColour
+- uid: BOOSE.ICanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  commentId: M:BOOSE.ICanvas.SetColour(System.Int32,System.Int32,System.Int32)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: SetColour(int, int, int)
+  nameWithType: ICanvas.SetColour(int, int, int)
+  fullName: BOOSE.ICanvas.SetColour(int, int, int)
+  nameWithType.vb: ICanvas.SetColour(Integer, Integer, Integer)
+  fullName.vb: BOOSE.ICanvas.SetColour(Integer, Integer, Integer)
+  name.vb: SetColour(Integer, Integer, Integer)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.SetColour(System.Int32,System.Int32,System.Int32)
+    name: SetColour
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.SetColour(System.Int32,System.Int32,System.Int32)
+    name: SetColour
+    isExternal: true
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.WriteText*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.WriteText
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_WriteText_System_String_
+  name: WriteText
+  nameWithType: PanelCanvas.WriteText
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.WriteText
+- uid: BOOSE.ICanvas.WriteText(System.String)
+  commentId: M:BOOSE.ICanvas.WriteText(System.String)
+  parent: BOOSE.ICanvas
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: WriteText(string)
+  nameWithType: ICanvas.WriteText(string)
+  fullName: BOOSE.ICanvas.WriteText(string)
+  nameWithType.vb: ICanvas.WriteText(String)
+  fullName.vb: BOOSE.ICanvas.WriteText(String)
+  name.vb: WriteText(String)
+  spec.csharp:
+  - uid: BOOSE.ICanvas.WriteText(System.String)
+    name: WriteText
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.WriteText(System.String)
+    name: WriteText
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: BOOSEInterpreter.Canvas.PanelCanvas.getBitmap*
+  commentId: Overload:BOOSEInterpreter.Canvas.PanelCanvas.getBitmap
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html#BOOSEInterpreter_Canvas_PanelCanvas_getBitmap
+  name: getBitmap
+  nameWithType: PanelCanvas.getBitmap
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas.getBitmap
+- uid: BOOSE.ICanvas.getBitmap
+  commentId: M:BOOSE.ICanvas.getBitmap
+  parent: BOOSE.ICanvas
+  isExternal: true
+  name: getBitmap()
+  nameWithType: ICanvas.getBitmap()
+  fullName: BOOSE.ICanvas.getBitmap()
+  spec.csharp:
+  - uid: BOOSE.ICanvas.getBitmap
+    name: getBitmap
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICanvas.getBitmap
+    name: getBitmap
+    isExternal: true
+  - name: (
+  - name: )

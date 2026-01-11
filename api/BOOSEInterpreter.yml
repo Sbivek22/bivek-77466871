@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter
+  commentId: N:BOOSEInterpreter
+  id: BOOSEInterpreter
+  children:
+  - BOOSEInterpreter.Form1
+  langs:
+  - csharp
+  - vb
+  name: BOOSEInterpreter
+  nameWithType: BOOSEInterpreter
+  fullName: BOOSEInterpreter
+  type: Namespace
+  assemblies:
+  - BOOSEInterpreter
+references:
+- uid: BOOSEInterpreter.Form1
+  commentId: T:BOOSEInterpreter.Form1
+  href: BOOSEInterpreter.Form1.html
+  name: Form1
+  nameWithType: Form1
+  fullName: BOOSEInterpreter.Form1

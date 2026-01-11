@@ -1,6 +1,4 @@
 ﻿using BOOSE;
-using System;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
@@ -21,20 +19,17 @@ namespace BOOSEInterpreter.Core.Command
     /// parameter is missing or invalid.
     /// </remarks>
     public class AppCircle : CommandOneParameter
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
         /// <summary>
         /// The canvas instance used to render the circle.
         /// </summary>
-        private readonly PanelCanvas _canvas;
-
+        private readonly ICanvas _canvas;
         /// <summary>
         /// Initializes a new instance of the <see cref="AppCircle"/> class using the
         /// specified <see cref="PanelCanvas"/> for rendering.
         /// </summary>
         /// <param name="c">The canvas that will receive the circle drawing commands. Must not be <c>null</c>.</param>
-        public AppCircle(PanelCanvas c) => _canvas = c;
-
+        public AppCircle(ICanvas c) => _canvas = c;
         /// <summary>
         /// Executes the circle command. The method:
         /// - Validates that the command has been initialised with a <see cref="Program"/>.
@@ -52,8 +47,6 @@ namespace BOOSEInterpreter.Core.Command
             if (Program == null)
                 throw new CommandException("Circle has not been initialised with a StoredProgram.");
 
-            // Use our evaluator (BOOSE trial evaluator can reject '*' which breaks examples
-            // like: circle count * 10).
             string exp = (ParameterList ?? string.Empty).Trim();
             if (string.IsNullOrWhiteSpace(exp))
                 throw new CommandException("Circle requires 1 parameter.");

@@ -1,6 +1,4 @@
 ﻿using BOOSE;
-using System;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
@@ -18,16 +16,13 @@ namespace BOOSEInterpreter.Core.Command
     /// parameters are missing or invalid.
     /// </remarks>
     public class AppRect : CommandTwoParameters
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
-    private readonly PanelCanvas _canvas;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AppRect"/> command.
-    /// </summary>
-    /// <param name="c">The <see cref="PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
-    public AppRect(PanelCanvas c) => _canvas = c;
-
+        private readonly ICanvas _canvas;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppRect"/> command.
+        /// </summary>
+        /// <param name="c">The <see cref="PanelCanvas"/> to draw onto. Must not be <c>null</c>.</param>
+        public AppRect(ICanvas c) => _canvas = c;
         /// <summary>
         /// Executes the command by parsing and evaluating the width and height parameters and
         /// invoking <see cref="PanelCanvas.Rect(int,int,bool)"/> with the evaluated values
@@ -44,7 +39,6 @@ namespace BOOSEInterpreter.Core.Command
             if (string.IsNullOrWhiteSpace(raw))
                 throw new CommandException("Rect requires 2 parameters.");
 
-            // Support both comma and space forms.
             string[] parts = raw.Contains(",")
                 ? raw.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 : raw.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

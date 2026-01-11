@@ -1,0 +1,326 @@
+{
+  "source_base_path": "C:/Users/Dell/source/repos/ase-boose-assignment-Sbivek22/BOOSEInterpreter",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Canvas.PanelCanvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Canvas.PanelCanvas.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Canvas.PanelCanvas",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Canvas.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Canvas.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Canvas",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.AppCommandFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.AppCommandFactory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.AppCommandFactory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppCircle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppCircle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppCircle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppDrawTo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppDrawTo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppDrawTo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppMoveTo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppMoveTo.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppMoveTo",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppPenColour.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppPenColour.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppPenColour",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppRect.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppRect.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppRect",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppTriCommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppTriCommand.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppTriCommand",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.AppWrite.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.AppWrite.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command.AppWrite",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.Command.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.Command.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core.Command",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Core.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Core",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.Form1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.Form1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter.Form1",
+      "Summary": "<p sourcefile=\"api/BOOSEInterpreter.Form1.yml\" sourcestartlinenumber=\"1\">Main form class for the BOOSE Interpreter application.\nHandles UI interaction, parsing, execution, and canvas updates.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreterTests.CanvasTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreterTests.CanvasTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreterTests.CanvasTests",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreterTests.Test1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreterTests.Test1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreterTests.Test1",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/BOOSEInterpreterTests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/BOOSEInterpreterTests.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "BOOSEInterpreterTests",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "docs/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "docs/toc.html"
+        },
+        ".json": {
+          "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

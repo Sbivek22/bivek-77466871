@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\source\\repos\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
       "projectName": "BOOSEInterpreter",
-      "projectPath": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
+      "projectPath": "C:\\Users\\Dell\\source\\repos\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\BOOSEInterpreter.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "D:\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\obj\\",
+      "outputPath": "C:\\Users\\Dell\\source\\repos\\ase-boose-assignment-Sbivek22\\BOOSEInterpreter\\BOOSEInterpreter\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

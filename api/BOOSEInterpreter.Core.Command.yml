@@ -1,0 +1,65 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter.Core.Command
+  commentId: N:BOOSEInterpreter.Core.Command
+  id: BOOSEInterpreter.Core.Command
+  children:
+  - BOOSEInterpreter.Core.Command.AppCircle
+  - BOOSEInterpreter.Core.Command.AppDrawTo
+  - BOOSEInterpreter.Core.Command.AppMoveTo
+  - BOOSEInterpreter.Core.Command.AppPenColour
+  - BOOSEInterpreter.Core.Command.AppRect
+  - BOOSEInterpreter.Core.Command.AppTriCommand
+  - BOOSEInterpreter.Core.Command.AppWrite
+  langs:
+  - csharp
+  - vb
+  name: BOOSEInterpreter.Core.Command
+  nameWithType: BOOSEInterpreter.Core.Command
+  fullName: BOOSEInterpreter.Core.Command
+  type: Namespace
+  assemblies:
+  - BOOSEInterpreter
+references:
+- uid: BOOSEInterpreter.Core.Command.AppCircle
+  commentId: T:BOOSEInterpreter.Core.Command.AppCircle
+  href: BOOSEInterpreter.Core.Command.AppCircle.html
+  name: AppCircle
+  nameWithType: AppCircle
+  fullName: BOOSEInterpreter.Core.Command.AppCircle
+- uid: BOOSEInterpreter.Core.Command.AppDrawTo
+  commentId: T:BOOSEInterpreter.Core.Command.AppDrawTo
+  href: BOOSEInterpreter.Core.Command.AppDrawTo.html
+  name: AppDrawTo
+  nameWithType: AppDrawTo
+  fullName: BOOSEInterpreter.Core.Command.AppDrawTo
+- uid: BOOSEInterpreter.Core.Command.AppMoveTo
+  commentId: T:BOOSEInterpreter.Core.Command.AppMoveTo
+  href: BOOSEInterpreter.Core.Command.AppMoveTo.html
+  name: AppMoveTo
+  nameWithType: AppMoveTo
+  fullName: BOOSEInterpreter.Core.Command.AppMoveTo
+- uid: BOOSEInterpreter.Core.Command.AppPenColour
+  commentId: T:BOOSEInterpreter.Core.Command.AppPenColour
+  href: BOOSEInterpreter.Core.Command.AppPenColour.html
+  name: AppPenColour
+  nameWithType: AppPenColour
+  fullName: BOOSEInterpreter.Core.Command.AppPenColour
+- uid: BOOSEInterpreter.Core.Command.AppRect
+  commentId: T:BOOSEInterpreter.Core.Command.AppRect
+  href: BOOSEInterpreter.Core.Command.AppRect.html
+  name: AppRect
+  nameWithType: AppRect
+  fullName: BOOSEInterpreter.Core.Command.AppRect
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand
+  commentId: T:BOOSEInterpreter.Core.Command.AppTriCommand
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html
+  name: AppTriCommand
+  nameWithType: AppTriCommand
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand
+- uid: BOOSEInterpreter.Core.Command.AppWrite
+  commentId: T:BOOSEInterpreter.Core.Command.AppWrite
+  href: BOOSEInterpreter.Core.Command.AppWrite.html
+  name: AppWrite
+  nameWithType: AppWrite
+  fullName: BOOSEInterpreter.Core.Command.AppWrite

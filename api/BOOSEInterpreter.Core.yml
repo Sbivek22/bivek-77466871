@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter.Core
+  commentId: N:BOOSEInterpreter.Core
+  id: BOOSEInterpreter.Core
+  children:
+  - BOOSEInterpreter.Core.AppCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: BOOSEInterpreter.Core
+  nameWithType: BOOSEInterpreter.Core
+  fullName: BOOSEInterpreter.Core
+  type: Namespace
+  assemblies:
+  - BOOSEInterpreter
+references:
+- uid: BOOSEInterpreter.Core.AppCommandFactory
+  commentId: T:BOOSEInterpreter.Core.AppCommandFactory
+  href: BOOSEInterpreter.Core.AppCommandFactory.html
+  name: AppCommandFactory
+  nameWithType: AppCommandFactory
+  fullName: BOOSEInterpreter.Core.AppCommandFactory

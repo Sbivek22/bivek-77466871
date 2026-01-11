@@ -1,0 +1,153 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "BOOSEInterpreter - Web Additional Section";
+}
+
+<h2 style="text-align:center;">BOOSEInterpreter Web Additional</h2>
+<p>Paste BOOSE code and click Run. The output image is rendered as PNG.</p>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap;">
+    <!-- LEFT: editor + buttons + output -->
+    <div style="flex:1; min-width:360px;">
+        <label><b>BOOSE Code</b></label><br />
+        <textarea id="code" style="width:100%; height:200px; font-family:Consolas, monospace;"></textarea>
+
+        <div style="margin-top:10px; display:flex; gap:10px; align-items:center;">
+            <button id="runBtn">Run</button>
+            <button id="clearBtn" type="button">Clear</button>
+            @* <button id="sampleBtn" type="button">New Sample</button> *@
+        </div>
+
+        <div style="margin-top:10px;">
+            <label><b>Output</b></label>
+            <pre id="out" style="background:#f5f5f5; padding:10px; min-height:80px;"></pre>
+        </div>
+    </div>
+
+    <div style="flex:1; min-width:300px;">
+        <label><b>Canvas Image</b></label><br />
+
+        <!-- Frame -->
+        <div id="frame"
+             style="width:400px; height:200px; border:2px solid #333; background:#fff;
+                    display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative;">
+
+            <!-- Placeholder (shown before first run / on error) -->
+            <div id="placeholder"
+                 style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+                        color:#666; font-size:14px; background:#fff;">
+                Run a program to render the canvas.
+            </div>
+
+            <!-- Image (hidden until we have a valid PNG) -->
+            <img id="img"
+                 alt=""
+                 style="display:none; max-width:100%; max-height:100%; object-fit:contain;" />
+        </div>
+
+        <div style="margin-top:6px; font-size:13px; color:#444;">
+            The rendered PNG will appear here after you click Run.
+        </div>
+    </div>
+</div>
+
+<script>
+        const DEFAULT_WIDTH = 900;
+        const DEFAULT_HEIGHT = 600;
+
+        function resetUI() {
+            const out = document.getElementById('out');
+            const img = document.getElementById('img');
+            const placeholder = document.getElementById('placeholder');
+
+            out.textContent = "";
+
+            img.removeAttribute('src');
+            img.style.display = "none";
+
+            placeholder.textContent = "Run a program to render the canvas.";
+            placeholder.style.display = "flex";
+        }
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            document.getElementById('code').value = "";
+            resetUI();
+        });
+
+    //     document.getElementById('sampleBtn').addEventListener('click', () => {
+    //         document.getElementById('code').value =
+    // `pen 255,0,0
+    // moveto 200,200
+    // circle 80
+    // pen 0,0,255
+    // moveto 50,50
+    // rect 200 120
+    // moveto 60,90
+    // write "Web OK"`;
+    //         resetUI();
+    //     });
+
+        document.getElementById('runBtn').addEventListener('click', async () => {
+            const code = document.getElementById('code').value;
+
+            const out = document.getElementById('out');
+            const img = document.getElementById('img');
+            const placeholder = document.getElementById('placeholder');
+
+            out.textContent = "Running...";
+            placeholder.textContent = "Rendering...";
+            placeholder.style.display = "flex";
+            img.style.display = "none";
+
+            let res;
+            try {
+                res = await fetch('/api/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, width: DEFAULT_WIDTH, height: DEFAULT_HEIGHT })
+                });
+            } catch (e) {
+                out.textContent = "Network error: " + String(e);
+                placeholder.textContent = "No image rendered.";
+                placeholder.style.display = "flex";
+                return;
+            }
+
+            const text = await res.text();
+
+            // If you still want to inspect errors without UI debug:
+            // console.log("HTTP", res.status, res.statusText, text);
+
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch {
+                out.textContent = "Server returned a non-JSON response (error).";
+                placeholder.textContent = "No image rendered.";
+                placeholder.style.display = "flex";
+                img.removeAttribute('src');
+                img.style.display = "none";
+                return;
+            }
+
+            const success = data.success ?? data.Success;
+            const output = data.output ?? data.Output ?? "";
+            const img64 = data.imageBase64 ?? data.ImageBase64;
+
+            out.textContent = output;
+
+            if (success && img64) {
+                img.src = "data:image/png;base64," + img64;
+                img.style.display = "block";
+                placeholder.style.display = "none";
+            } else {
+                img.removeAttribute('src');
+                img.style.display = "none";
+                placeholder.textContent = "No image rendered (check Output).";
+                placeholder.style.display = "flex";
+            }
+        });
+
+        resetUI();
+</script>

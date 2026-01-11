@@ -1,0 +1,705 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand
+  commentId: T:BOOSEInterpreter.Core.Command.AppTriCommand
+  id: AppTriCommand
+  parent: BOOSEInterpreter.Core.Command
+  children:
+  - BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)
+  - BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(System.String[])
+  - BOOSEInterpreter.Core.Command.AppTriCommand.Compile
+  - BOOSEInterpreter.Core.Command.AppTriCommand.Execute
+  - BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)
+  langs:
+  - csharp
+  - vb
+  name: AppTriCommand
+  nameWithType: AppTriCommand
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand
+  type: Class
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: AppTriCommand
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 5
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  syntax:
+    content: 'public class AppTriCommand : ICommand'
+    content.vb: Public Class AppTriCommand Implements ICommand
+  inheritance:
+  - System.Object
+  implements:
+  - BOOSE.ICommand
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)
+  commentId: M:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor(BOOSEInterpreter.Canvas.PanelCanvas)
+  id: '#ctor(BOOSEInterpreter.Canvas.PanelCanvas)'
+  parent: BOOSEInterpreter.Core.Command.AppTriCommand
+  langs:
+  - csharp
+  - vb
+  name: AppTriCommand(PanelCanvas)
+  nameWithType: AppTriCommand.AppTriCommand(PanelCanvas)
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.AppTriCommand(BOOSEInterpreter.Canvas.PanelCanvas)
+  type: Constructor
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: .ctor
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 10
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  syntax:
+    content: public AppTriCommand(PanelCanvas c)
+    parameters:
+    - id: c
+      type: BOOSEInterpreter.Canvas.PanelCanvas
+    content.vb: Public Sub New(c As PanelCanvas)
+  overload: BOOSEInterpreter.Core.Command.AppTriCommand.#ctor*
+  nameWithType.vb: AppTriCommand.New(PanelCanvas)
+  fullName.vb: BOOSEInterpreter.Core.Command.AppTriCommand.New(BOOSEInterpreter.Canvas.PanelCanvas)
+  name.vb: New(PanelCanvas)
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)
+  commentId: M:BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram,System.String)
+  id: Set(BOOSE.StoredProgram,System.String)
+  parent: BOOSEInterpreter.Core.Command.AppTriCommand
+  langs:
+  - csharp
+  - vb
+  name: Set(StoredProgram, string)
+  nameWithType: AppTriCommand.Set(StoredProgram, string)
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram, string)
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Set
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 15
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  example: []
+  syntax:
+    content: public void Set(StoredProgram program, string paramList)
+    parameters:
+    - id: program
+      type: BOOSE.StoredProgram
+    - id: paramList
+      type: System.String
+    content.vb: Public Sub [Set](program As StoredProgram, paramList As String)
+  overload: BOOSEInterpreter.Core.Command.AppTriCommand.Set*
+  implements:
+  - BOOSE.ICommand.Set(BOOSE.StoredProgram,System.String)
+  nameWithType.vb: AppTriCommand.Set(StoredProgram, String)
+  fullName.vb: BOOSEInterpreter.Core.Command.AppTriCommand.Set(BOOSE.StoredProgram, String)
+  name.vb: Set(StoredProgram, String)
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Compile
+  commentId: M:BOOSEInterpreter.Core.Command.AppTriCommand.Compile
+  id: Compile
+  parent: BOOSEInterpreter.Core.Command.AppTriCommand
+  langs:
+  - csharp
+  - vb
+  name: Compile()
+  nameWithType: AppTriCommand.Compile()
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Compile()
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Compile
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 23
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  example: []
+  syntax:
+    content: public void Compile()
+    content.vb: Public Sub Compile()
+  overload: BOOSEInterpreter.Core.Command.AppTriCommand.Compile*
+  implements:
+  - BOOSE.ICommand.Compile
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(System.String[])
+  commentId: M:BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(System.String[])
+  id: CheckParameters(System.String[])
+  parent: BOOSEInterpreter.Core.Command.AppTriCommand
+  langs:
+  - csharp
+  - vb
+  name: CheckParameters(string[])
+  nameWithType: AppTriCommand.CheckParameters(string[])
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(string[])
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: CheckParameters
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 28
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  example: []
+  syntax:
+    content: public void CheckParameters(string[] parameters)
+    parameters:
+    - id: parameters
+      type: System.String[]
+    content.vb: Public Sub CheckParameters(parameters As String())
+  overload: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters*
+  implements:
+  - BOOSE.ICommand.CheckParameters(System.String[])
+  nameWithType.vb: AppTriCommand.CheckParameters(String())
+  fullName.vb: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters(String())
+  name.vb: CheckParameters(String())
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Execute
+  commentId: M:BOOSEInterpreter.Core.Command.AppTriCommand.Execute
+  id: Execute
+  parent: BOOSEInterpreter.Core.Command.AppTriCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute()
+  nameWithType: AppTriCommand.Execute()
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Execute()
+  type: Method
+  source:
+    remote:
+      path: BOOSEInterpreter/BOOSEInterpreter/Core/Command/AppTriCommand.cs
+      branch: main
+      repo: https://github.com/ASE2025repos/ase-boose-assignment-Sbivek22.git
+    id: Execute
+    path: BOOSEInterpreter/Core/Command/AppTriCommand.cs
+    startLine: 33
+  assemblies:
+  - BOOSEInterpreter
+  namespace: BOOSEInterpreter.Core.Command
+  example: []
+  syntax:
+    content: public void Execute()
+    content.vb: Public Sub Execute()
+  overload: BOOSEInterpreter.Core.Command.AppTriCommand.Execute*
+  implements:
+  - BOOSE.ICommand.Execute
+references:
+- uid: BOOSEInterpreter.Core.Command
+  commentId: N:BOOSEInterpreter.Core.Command
+  href: BOOSEInterpreter.html
+  name: BOOSEInterpreter.Core.Command
+  nameWithType: BOOSEInterpreter.Core.Command
+  fullName: BOOSEInterpreter.Core.Command
+  spec.csharp:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Core
+    name: Core
+    href: BOOSEInterpreter.Core.html
+  - name: .
+  - uid: BOOSEInterpreter.Core.Command
+    name: Command
+    href: BOOSEInterpreter.Core.Command.html
+  spec.vb:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Core
+    name: Core
+    href: BOOSEInterpreter.Core.html
+  - name: .
+  - uid: BOOSEInterpreter.Core.Command
+    name: Command
+    href: BOOSEInterpreter.Core.Command.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: BOOSE.ICommand
+  commentId: T:BOOSE.ICommand
+  parent: BOOSE
+  isExternal: true
+  name: ICommand
+  nameWithType: ICommand
+  fullName: BOOSE.ICommand
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: BOOSE
+  commentId: N:BOOSE
+  isExternal: true
+  name: BOOSE
+  nameWithType: BOOSE
+  fullName: BOOSE
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.#ctor*
+  commentId: Overload:BOOSEInterpreter.Core.Command.AppTriCommand.#ctor
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html#BOOSEInterpreter_Core_Command_AppTriCommand__ctor_BOOSEInterpreter_Canvas_PanelCanvas_
+  name: AppTriCommand
+  nameWithType: AppTriCommand.AppTriCommand
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.AppTriCommand
+  nameWithType.vb: AppTriCommand.New
+  fullName.vb: BOOSEInterpreter.Core.Command.AppTriCommand.New
+  name.vb: New
+- uid: BOOSEInterpreter.Canvas.PanelCanvas
+  commentId: T:BOOSEInterpreter.Canvas.PanelCanvas
+  parent: BOOSEInterpreter.Canvas
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html
+  name: PanelCanvas
+  nameWithType: PanelCanvas
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas
+- uid: BOOSEInterpreter.Canvas
+  commentId: N:BOOSEInterpreter.Canvas
+  href: BOOSEInterpreter.html
+  name: BOOSEInterpreter.Canvas
+  nameWithType: BOOSEInterpreter.Canvas
+  fullName: BOOSEInterpreter.Canvas
+  spec.csharp:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html
+  spec.vb:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Set*
+  commentId: Overload:BOOSEInterpreter.Core.Command.AppTriCommand.Set
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html#BOOSEInterpreter_Core_Command_AppTriCommand_Set_BOOSE_StoredProgram_System_String_
+  name: Set
+  nameWithType: AppTriCommand.Set
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Set
+- uid: BOOSE.ICommand.Set(BOOSE.StoredProgram,System.String)
+  commentId: M:BOOSE.ICommand.Set(BOOSE.StoredProgram,System.String)
+  parent: BOOSE.ICommand
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: Set(StoredProgram, string)
+  nameWithType: ICommand.Set(StoredProgram, string)
+  fullName: BOOSE.ICommand.Set(BOOSE.StoredProgram, string)
+  nameWithType.vb: ICommand.Set(StoredProgram, String)
+  fullName.vb: BOOSE.ICommand.Set(BOOSE.StoredProgram, String)
+  name.vb: Set(StoredProgram, String)
+  spec.csharp:
+  - uid: BOOSE.ICommand.Set(BOOSE.StoredProgram,System.String)
+    name: Set
+    isExternal: true
+  - name: (
+  - uid: BOOSE.StoredProgram
+    name: StoredProgram
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICommand.Set(BOOSE.StoredProgram,System.String)
+    name: Set
+    isExternal: true
+  - name: (
+  - uid: BOOSE.StoredProgram
+    name: StoredProgram
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: BOOSE.StoredProgram
+  commentId: T:BOOSE.StoredProgram
+  parent: BOOSE
+  isExternal: true
+  name: StoredProgram
+  nameWithType: StoredProgram
+  fullName: BOOSE.StoredProgram
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Compile*
+  commentId: Overload:BOOSEInterpreter.Core.Command.AppTriCommand.Compile
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html#BOOSEInterpreter_Core_Command_AppTriCommand_Compile
+  name: Compile
+  nameWithType: AppTriCommand.Compile
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Compile
+- uid: BOOSE.ICommand.Compile
+  commentId: M:BOOSE.ICommand.Compile
+  parent: BOOSE.ICommand
+  isExternal: true
+  name: Compile()
+  nameWithType: ICommand.Compile()
+  fullName: BOOSE.ICommand.Compile()
+  spec.csharp:
+  - uid: BOOSE.ICommand.Compile
+    name: Compile
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICommand.Compile
+    name: Compile
+    isExternal: true
+  - name: (
+  - name: )
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters*
+  commentId: Overload:BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html#BOOSEInterpreter_Core_Command_AppTriCommand_CheckParameters_System_String___
+  name: CheckParameters
+  nameWithType: AppTriCommand.CheckParameters
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.CheckParameters
+- uid: BOOSE.ICommand.CheckParameters(System.String[])
+  commentId: M:BOOSE.ICommand.CheckParameters(System.String[])
+  parent: BOOSE.ICommand
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: CheckParameters(string[])
+  nameWithType: ICommand.CheckParameters(string[])
+  fullName: BOOSE.ICommand.CheckParameters(string[])
+  nameWithType.vb: ICommand.CheckParameters(String())
+  fullName.vb: BOOSE.ICommand.CheckParameters(String())
+  name.vb: CheckParameters(String())
+  spec.csharp:
+  - uid: BOOSE.ICommand.CheckParameters(System.String[])
+    name: CheckParameters
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICommand.CheckParameters(System.String[])
+    name: CheckParameters
+    isExternal: true
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+  - name: )
+- uid: System.String[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+- uid: BOOSEInterpreter.Core.Command.AppTriCommand.Execute*
+  commentId: Overload:BOOSEInterpreter.Core.Command.AppTriCommand.Execute
+  href: BOOSEInterpreter.Core.Command.AppTriCommand.html#BOOSEInterpreter_Core_Command_AppTriCommand_Execute
+  name: Execute
+  nameWithType: AppTriCommand.Execute
+  fullName: BOOSEInterpreter.Core.Command.AppTriCommand.Execute
+- uid: BOOSE.ICommand.Execute
+  commentId: M:BOOSE.ICommand.Execute
+  parent: BOOSE.ICommand
+  isExternal: true
+  name: Execute()
+  nameWithType: ICommand.Execute()
+  fullName: BOOSE.ICommand.Execute()
+  spec.csharp:
+  - uid: BOOSE.ICommand.Execute
+    name: Execute
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: BOOSE.ICommand.Execute
+    name: Execute
+    isExternal: true
+  - name: (
+  - name: )

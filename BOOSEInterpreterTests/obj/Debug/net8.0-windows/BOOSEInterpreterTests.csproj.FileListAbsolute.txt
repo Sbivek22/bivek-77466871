@@ -1,12 +1,4 @@
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\.msCoverageSourceRootsMapping_BOOSEInterpreterTests
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.csproj.AssemblyReference.cache
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.gentestingplatformentrypointinputcache.cache
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.genautoregisteredextensionsinputcache.cache
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.AssemblyInfoInputs.cache
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.AssemblyInfo.cs
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.csproj.CoreCompileInputs.cache
-C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.sourcelink.json
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\testhost.dll
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\Microsoft.TestPlatform.AdapterUtilities.dll
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\BOOSEInterpreter.deps.json
@@ -185,6 +177,14 @@ C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEI
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\BOOSEInterpreter.pdb
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\BOOSEInterpreter.xml
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\bin\Debug\net8.0-windows\MSTest.TestFramework.Extensions.xml
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.csproj.AssemblyReference.cache
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.gentestingplatformentrypointinputcache.cache
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.genautoregisteredextensionsinputcache.cache
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.AssemblyInfoInputs.cache
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.AssemblyInfo.cs
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.csproj.CoreCompileInputs.cache
+C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.sourcelink.json
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInt.1864C51A.Up2Date
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\BOOSEInterpreterTests.dll
 C:\Users\Dell\source\repos\ase-boose-assignment-Sbivek22\BOOSEInterpreter\BOOSEInterpreterTests\obj\Debug\net8.0-windows\refint\BOOSEInterpreterTests.dll

@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: BOOSEInterpreter.Canvas
+  commentId: N:BOOSEInterpreter.Canvas
+  id: BOOSEInterpreter.Canvas
+  children:
+  - BOOSEInterpreter.Canvas.PanelCanvas
+  langs:
+  - csharp
+  - vb
+  name: BOOSEInterpreter.Canvas
+  nameWithType: BOOSEInterpreter.Canvas
+  fullName: BOOSEInterpreter.Canvas
+  type: Namespace
+  assemblies:
+  - BOOSEInterpreter
+references:
+- uid: BOOSEInterpreter.Canvas.PanelCanvas
+  commentId: T:BOOSEInterpreter.Canvas.PanelCanvas
+  parent: BOOSEInterpreter.Canvas
+  href: BOOSEInterpreter.Canvas.PanelCanvas.html
+  name: PanelCanvas
+  nameWithType: PanelCanvas
+  fullName: BOOSEInterpreter.Canvas.PanelCanvas
+- uid: BOOSEInterpreter.Canvas
+  commentId: N:BOOSEInterpreter.Canvas
+  href: BOOSEInterpreter.html
+  name: BOOSEInterpreter.Canvas
+  nameWithType: BOOSEInterpreter.Canvas
+  fullName: BOOSEInterpreter.Canvas
+  spec.csharp:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html
+  spec.vb:
+  - uid: BOOSEInterpreter
+    name: BOOSEInterpreter
+    href: BOOSEInterpreter.html
+  - name: .
+  - uid: BOOSEInterpreter.Canvas
+    name: Canvas
+    href: BOOSEInterpreter.Canvas.html

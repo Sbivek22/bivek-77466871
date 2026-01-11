@@ -1,5 +1,4 @@
 ﻿using BOOSE;
-using BOOSEInterpreter.Canvas;
 using BOOSEInterpreter.Core.Runtime;
 
 namespace BOOSEInterpreter.Core.Command
@@ -17,19 +16,16 @@ namespace BOOSEInterpreter.Core.Command
     /// parameters are missing or malformed.
     /// </remarks>
     public class AppMoveTo : CommandTwoParameters
-#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
     {
         /// <summary>
         /// The canvas whose current pen position will be modified.
         /// </summary>
-        private readonly PanelCanvas _canvas;
-
+        private readonly ICanvas _canvas;
         /// <summary>
         /// Initializes a new <see cref="AppMoveTo"/> instance that operates on the provided canvas.
         /// </summary>
         /// <param name="c">The <see cref="PanelCanvas"/> to update. Must not be <c>null</c>.</param>
-        public AppMoveTo(PanelCanvas c) => _canvas = c;
-
+        public AppMoveTo(ICanvas c) => _canvas = c;
         /// <summary>
         /// Executes the move operation: validates parameters, evaluates them to integers and
         /// calls <see cref="PanelCanvas.MoveTo(int,int)"/> to set the new pen position.
@@ -57,7 +53,5 @@ namespace BOOSEInterpreter.Core.Command
 
             _canvas.MoveTo(x, y);
         }
-
-
     }
 }

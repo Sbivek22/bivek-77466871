@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11222.16 d18.3
+VisualStudioVersion = 18.3.11222.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOOSEInterpreter", "BOOSEInterpreter\BOOSEInterpreter.csproj", "{19CEF568-A64B-431E-B907-4AFBC78122AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOOSEInterpreterTests", "BOOSEInterpreterTests\BOOSEInterpreterTests.csproj", "{0BE9FC63-9EA4-428C-991D-20DE9473B180}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAdditonal", "WebAdditonal\WebAdditonal.csproj", "{352E55F5-6C8E-4C96-BEA6-DA9DE9FD7E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0BE9FC63-9EA4-428C-991D-20DE9473B180}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE9FC63-9EA4-428C-991D-20DE9473B180}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE9FC63-9EA4-428C-991D-20DE9473B180}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352E55F5-6C8E-4C96-BEA6-DA9DE9FD7E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352E55F5-6C8E-4C96-BEA6-DA9DE9FD7E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352E55F5-6C8E-4C96-BEA6-DA9DE9FD7E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352E55F5-6C8E-4C96-BEA6-DA9DE9FD7E2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
+
+  "metadata": [
+    {
+      "src": [
+        {
+          "cwd": ".",
+          "files": [ "**/*.csproj" ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+
+  "build": {
+    "content": [
+      {
+        "files": [ "index.md", "toc.yml" ]
+      },
+      {
+        "files": [ "docs/**" ]
+      },
+      {
+        "files": [ "api/**" ]
+      }
+    ],
+
+    "resource": [
+      {
+        "files": [ "images/**" ]
+      }
+    ],
+
+    "output": "_site",
+
+    "template": [
+      "default",
+      "modern"
+    ],
+
+    "globalMetadata": {
+      "_appName": "BOOSE Interpreter by Bivek",
+      "_appTitle": "BOOSE Interpreter Documentation",
+      "_enableSearch": true
+    }
+  }
+}
